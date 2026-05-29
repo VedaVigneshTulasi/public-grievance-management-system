@@ -4,6 +4,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
+import complaintRoutes from "./routes/complaintRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
 
@@ -25,5 +27,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRoutes);
+
+app.use("/api/v1/complaints", complaintRoutes);
+
+app.use("/api/v1/admin", adminRoutes);
 
 export default app;
