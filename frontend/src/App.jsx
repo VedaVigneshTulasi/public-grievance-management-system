@@ -16,6 +16,8 @@ import ComplaintDetailsPage from "./features/complaints/pages/ComplaintDetailsPa
 
 import AdminDashboardPage from "./features/admin/pages/AdminDashboardPage";
 
+import NotFoundPage from "./pages/NotFoundPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -63,6 +65,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

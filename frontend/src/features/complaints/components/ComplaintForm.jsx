@@ -1,5 +1,6 @@
-
 import { useState } from "react";
+
+import toast from "react-hot-toast";
 
 import {
   createComplaintApi,
@@ -35,7 +36,7 @@ const ComplaintForm = () => {
         formData
       );
 
-      alert(
+      toast.success(
         "Complaint submitted successfully"
       );
 
@@ -51,106 +52,166 @@ const ComplaintForm = () => {
 
       console.log(error);
 
-      alert("Failed to submit complaint");
+      toast.error(
+        "Failed to submit complaint"
+      );
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
+      className="bg-white border border-gray-200 rounded-xl p-6 lg:p-8 shadow-sm"
     >
 
       <h2 className="text-2xl font-bold text-[#0b2e59] mb-6">
-        Lodge Complaint
+        Complaint Information
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
 
-        <input
-          type="text"
-          name="title"
-          placeholder="Complaint Title"
-          value={formData.title}
-          onChange={handleChange}
-          className="w-full border border-gray-300 p-3 rounded"
-        />
+        {/* Title */}
 
-        <textarea
-          name="description"
-          placeholder="Complaint Description"
-          value={formData.description}
-          onChange={handleChange}
-          rows="5"
-          className="w-full border border-gray-300 p-3 rounded"
-        />
+        <div>
 
-        <select
-          name="department"
-          value={formData.department}
-          onChange={handleChange}
-          className="w-full border border-gray-300 p-3 rounded"
-        >
+          <label className="block font-semibold mb-2">
+            Complaint Title
+          </label>
 
-          <option value="">
-            Select Department
-          </option>
+          <input
+            type="text"
+            name="title"
+            placeholder="Enter complaint title"
+            value={formData.title}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg outline-none focus:ring-2 focus:ring-[#0b2e59]"
+            required
+          />
 
-          <option value="Roads">
-            Roads
-          </option>
+        </div>
 
-          <option value="Water Supply">
-            Water Supply
-          </option>
+        {/* Description */}
 
-          <option value="Electricity">
-            Electricity
-          </option>
+        <div>
 
-          <option value="Sanitation">
-            Sanitation
-          </option>
+          <label className="block font-semibold mb-2">
+            Description
+          </label>
 
-        </select>
+          <textarea
+            name="description"
+            placeholder="Describe your complaint"
+            value={formData.description}
+            onChange={handleChange}
+            rows="6"
+            className="w-full border border-gray-300 p-3 rounded-lg outline-none focus:ring-2 focus:ring-[#0b2e59]"
+            required
+          />
 
-        <select
-          name="priority"
-          value={formData.priority}
-          onChange={handleChange}
-          className="w-full border border-gray-300 p-3 rounded"
-        >
+        </div>
 
-          <option value="Low">
-            Low
-          </option>
+        {/* Department + Priority */}
 
-          <option value="Medium">
-            Medium
-          </option>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-          <option value="High">
-            High
-          </option>
+          <div>
 
-          <option value="Critical">
-            Critical
-          </option>
+            <label className="block font-semibold mb-2">
+              Department
+            </label>
 
-        </select>
+            <select
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-3 rounded-lg outline-none focus:ring-2 focus:ring-[#0b2e59]"
+              required
+            >
 
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={formData.location}
-          onChange={handleChange}
-          className="w-full border border-gray-300 p-3 rounded"
-        />
+              <option value="">
+                Select Department
+              </option>
+
+              <option value="Roads">
+                Roads
+              </option>
+
+              <option value="Water Supply">
+                Water Supply
+              </option>
+
+              <option value="Electricity">
+                Electricity
+              </option>
+
+              <option value="Sanitation">
+                Sanitation
+              </option>
+
+            </select>
+
+          </div>
+
+          <div>
+
+            <label className="block font-semibold mb-2">
+              Priority
+            </label>
+
+            <select
+              name="priority"
+              value={formData.priority}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-3 rounded-lg outline-none focus:ring-2 focus:ring-[#0b2e59]"
+            >
+
+              <option value="Low">
+                Low
+              </option>
+
+              <option value="Medium">
+                Medium
+              </option>
+
+              <option value="High">
+                High
+              </option>
+
+              <option value="Critical">
+                Critical
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+        {/* Location */}
+
+        <div>
+
+          <label className="block font-semibold mb-2">
+            Location
+          </label>
+
+          <input
+            type="text"
+            name="location"
+            placeholder="Enter complaint location"
+            value={formData.location}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg outline-none focus:ring-2 focus:ring-[#0b2e59]"
+            required
+          />
+
+        </div>
+
+        {/* Submit Button */}
 
         <button
           type="submit"
-          className="bg-[#0b2e59] hover:bg-[#163d73] text-white px-6 py-3 rounded"
+          className="w-full bg-[#0b2e59] hover:bg-[#163d73] text-white font-semibold py-3 rounded-lg transition"
         >
           Submit Complaint
         </button>

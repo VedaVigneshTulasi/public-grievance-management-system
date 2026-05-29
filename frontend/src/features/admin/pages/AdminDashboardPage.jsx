@@ -3,11 +3,13 @@ import {
   useState,
 } from "react";
 
-import Navbar from "../../../components/layout/Navbar";
+import DashboardLayout from "../../../components/layout/DashboardLayout";
 
 import PageContainer from "../../../components/layout/PageContainer";
 
 import ComplaintTable from "../components/ComplaintTable";
+
+import Loader from "../../../components/common/Loader";
 
 import {
   getAdminComplaintsApi,
@@ -18,6 +20,9 @@ const AdminDashboardPage = () => {
 
   const [complaints, setComplaints] =
     useState([]);
+
+  const [loading, setLoading] =
+    useState(true);
 
   useEffect(() => {
 
@@ -40,6 +45,10 @@ const AdminDashboardPage = () => {
       } catch (error) {
 
         console.log(error);
+
+      } finally {
+
+        setLoading(false);
       }
     };
 
@@ -61,10 +70,12 @@ const AdminDashboardPage = () => {
       }
     };
 
-  return (
-    <div className="min-h-screen bg-[#f5f7fa]">
+  if (loading) {
+    return <Loader />;
+  }
 
-      <Navbar />
+  return (
+    <DashboardLayout>
 
       <PageContainer>
 
@@ -75,7 +86,7 @@ const AdminDashboardPage = () => {
           </h1>
 
           <p className="text-gray-600 mt-2">
-            Manage public complaints
+            Manage and monitor complaints
           </p>
 
         </div>
@@ -89,7 +100,7 @@ const AdminDashboardPage = () => {
 
       </PageContainer>
 
-    </div>
+    </DashboardLayout>
   );
 };
 

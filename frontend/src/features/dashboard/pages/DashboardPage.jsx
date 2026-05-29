@@ -3,7 +3,7 @@ import {
   useState,
 } from "react";
 
-import Navbar from "../../../components/layout/Navbar";
+import DashboardLayout from "../../../components/layout/DashboardLayout";
 
 import PageContainer from "../../../components/layout/PageContainer";
 
@@ -69,9 +69,7 @@ const DashboardPage = () => {
     };
 
   return (
-    <div className="min-h-screen bg-[#f5f7fa]">
-
-      <Navbar />
+    <DashboardLayout>
 
       <PageContainer>
 
@@ -140,7 +138,7 @@ const DashboardPage = () => {
 
       </PageContainer>
 
-    </div>
+    </DashboardLayout>
   );
 };
 
