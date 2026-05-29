@@ -43,6 +43,13 @@ const Navbar = () => {
           </button>
 
           <button
+            onClick={() => navigate("/complaints")}
+            className="bg-white text-[#0b2e59] px-4 py-2 rounded font-semibold"
+          >
+            My Complaints
+          </button>
+
+          <button
             onClick={handleLogout}
             className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded"
           >

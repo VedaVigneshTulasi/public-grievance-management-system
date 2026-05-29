@@ -1,8 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoginPage from "./features/auth/pages/LoginPage";
 
@@ -14,23 +10,16 @@ import CreateComplaintPage from "./features/complaints/pages/CreateComplaintPage
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 
-function App() {
+import ComplaintListPage from "./features/complaints/pages/ComplaintListPage";
 
+import ComplaintDetailsPage from "./features/complaints/pages/ComplaintDetailsPage";
+
+function App() {
   return (
     <BrowserRouter>
-
       <Routes>
-
-        <Route
-          path="/login"
-          element={<LoginPage />}
-        />
-
-        <Route
-          path="/register"
-          element={<RegisterPage />}
-        />
-
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route
           path="/"
           element={
@@ -39,7 +28,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/create-complaint"
           element={
@@ -48,9 +36,24 @@ function App() {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/complaints"
+          element={
+            <ProtectedRoute>
+              <ComplaintListPage />
+            </ProtectedRoute>
+          }
+        />
+        ;
+        <Route
+          path="/complaints/:id"
+          element={
+            <ProtectedRoute>
+              <ComplaintDetailsPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-
     </BrowserRouter>
   );
 }

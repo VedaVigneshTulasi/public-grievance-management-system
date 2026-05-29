@@ -1,41 +1,60 @@
 import axiosInstance from "../../../api/axiosInstance";
-
+ 
+const getToken = () => {
+  return localStorage.getItem("token");
+};
+ 
 export const createComplaintApi = async (
   data
 ) => {
-
-  const token =
-    localStorage.getItem("token");
-
+ 
   const response =
     await axiosInstance.post(
       "/complaints",
       data,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization:
+            `Bearer ${getToken()}`,
         },
       }
     );
-
+ 
   return response.data;
 };
-
+ 
 export const getComplaintsApi =
-  async () => {
-
-    const token =
-      localStorage.getItem("token");
-
+  async (params = {}) => {
+ 
     const response =
       await axiosInstance.get(
         "/complaints",
         {
+          params,
+ 
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization:
+              `Bearer ${getToken()}`,
           },
         }
       );
-
+ 
+    return response.data;
+};
+ 
+export const getComplaintByIdApi =
+  async (id) => {
+ 
+    const response =
+      await axiosInstance.get(
+        `/complaints/${id}`,
+        {
+          headers: {
+            Authorization:
+              `Bearer ${getToken()}`,
+          },
+        }
+      );
+ 
     return response.data;
 };
