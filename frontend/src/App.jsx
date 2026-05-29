@@ -14,6 +14,8 @@ import ComplaintListPage from "./features/complaints/pages/ComplaintListPage";
 
 import ComplaintDetailsPage from "./features/complaints/pages/ComplaintDetailsPage";
 
+import AdminDashboardPage from "./features/admin/pages/AdminDashboardPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -50,6 +52,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ComplaintDetailsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboardPage />
             </ProtectedRoute>
           }
         />
