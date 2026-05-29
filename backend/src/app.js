@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
@@ -22,5 +23,7 @@ app.get("/", (req, res) => {
     message: "Public Grievance API Running",
   });
 });
+
+app.use("/api/v1/auth", authRoutes);
 
 export default app;
