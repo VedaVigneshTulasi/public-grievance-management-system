@@ -8,7 +8,14 @@ import { getDashboardStats } from "../services/dashboardService";
 
 import { getComplaints } from "../../complaints/services/complaintService";
 
+import { getStatusReport } from "../services/dashboardService";
+
+import { getDepartmentReport } from "../services/dashboardService";
+
+import Card from "../../../components/ui/Card";
+
 import Skeleton from "../../../components/common/Skeleton";
+import AnalyticsChart from "../components/AnalyticsChart";
 
 const DashboardPage = () => {
   const [stats, setStats] = useState({});
@@ -16,6 +23,10 @@ const DashboardPage = () => {
   const [complaints, setComplaints] = useState([]);
 
   const [loading, setLoading] = useState(true);
+
+  const [statusReport, setStatusReport] = useState([]);
+
+  const [departmentReport, setDepartmentReport] = useState([]);
 
   useEffect(() => {
     loadDashboard();
@@ -25,6 +36,17 @@ const DashboardPage = () => {
       const statsData = await getDashboardStats();
 
       const complaintsData = await getComplaints();
+
+      const statusData = await getStatusReport();
+
+      const departmentData = await getDepartmentReport();
+
+      console.log("Status Report:", statusData);
+
+      console.log("Department Report:", departmentData);
+
+      setStatusReport(statusData);
+      setDepartmentReport(departmentData);
 
       setStats(statsData);
 
@@ -76,6 +98,20 @@ const DashboardPage = () => {
           value={stats.totalDepartments || 0}
           color="text-purple-600"
         />
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-6 mt-8">
+        <Card className="p-6">
+          <h2 className="text-xl font-bold mb-4">Complaint Status Report</h2>
+
+          <AnalyticsChart data={statusReport} />
+        </Card>
+
+        <Card className="p-6">
+          <h2 className="text-xl font-bold mb-4">Department Report</h2>
+
+          <AnalyticsChart data={departmentReport} />
+        </Card>
       </div>
 
       {/* Quick Actions */}

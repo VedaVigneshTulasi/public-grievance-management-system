@@ -43,3 +43,20 @@ export const addRemark =
 
     return response.data;
 };
+
+export const assignDepartment =
+  async (
+    complaintId,
+    department
+  ) => {
+
+    const response =
+      await axiosInstance.patch(
+        `/admin/assign-department/${complaintId}`,
+        {
+          department,
+        }
+      );
+
+    return response.data;
+};

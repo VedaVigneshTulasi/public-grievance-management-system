@@ -17,9 +17,9 @@ import DashboardPage from "../../features/dashboard/pages/DashboardPage";
 import CreateComplaintPage from "../../features/complaints/pages/CreateComplaintPage";
 import ComplaintListPage from "../../features/complaints/pages/ComplaintListPage";
 import ComplaintDetailsPage from "../../features/complaints/pages/ComplaintDetailsPage";
+import EditComplaintPage from "../../features/complaints/pages/EditComplaintPage";
 
 import AdminDashboardPage from "../../features/admin/pages/AdminDashboardPage";
-
 import ActivityLogsPage from "../../features/admin/pages/ActivityLogsPage";
 
 const AppRoutes = () => {
@@ -56,6 +56,11 @@ const AppRoutes = () => {
           <Route path="/complaints/create" element={<CreateComplaintPage />} />
 
           <Route path="/complaints/:id" element={<ComplaintDetailsPage />} />
+
+          <Route
+            path="/complaints/edit/:id"
+            element={<EditComplaintPage />}
+          />
         </Route>
 
         {/* Admin */}
@@ -70,9 +75,9 @@ const AppRoutes = () => {
           }
         >
           <Route path="/admin" element={<AdminDashboardPage />} />
-        </Route>
 
-        <Route path="/activity-logs" element={<ActivityLogsPage />} />
+          <Route path="/activity-logs" element={<ActivityLogsPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

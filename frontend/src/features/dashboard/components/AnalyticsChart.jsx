@@ -15,8 +15,17 @@ const COLORS = [
 ];
 
 const AnalyticsChart = ({
-  data,
+  data = [],
 }) => {
+
+  if (!Array.isArray(data)) {
+
+    return (
+      <div className="text-center py-10">
+        No Chart Data Available
+      </div>
+    );
+  }
 
   return (
     <div className="h-96">
@@ -29,28 +38,24 @@ const AnalyticsChart = ({
             data={data}
             dataKey="count"
             nameKey="_id"
-            outerRadius={130}
+            outerRadius={120}
+            label
           >
 
-            {
-              data.map(
-                (
-                  entry,
-                  index
-                ) => (
+            {data.map(
+              (entry, index) => (
 
-                  <Cell
-                    key={index}
-                    fill={
-                      COLORS[
-                        index %
-                        COLORS.length
-                      ]
-                    }
-                  />
-                )
+                <Cell
+                  key={index}
+                  fill={
+                    COLORS[
+                      index %
+                      COLORS.length
+                    ]
+                  }
+                />
               )
-            }
+            )}
 
           </Pie>
 
