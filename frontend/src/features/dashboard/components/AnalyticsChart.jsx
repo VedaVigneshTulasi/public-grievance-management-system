@@ -4,6 +4,12 @@ import {
   Cell,
   Tooltip,
   ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
 } from "recharts";
 
 const COLORS = [
@@ -16,52 +22,97 @@ const COLORS = [
 
 const AnalyticsChart = ({
   data = [],
+  type = "pie",
 }) => {
 
-  if (!Array.isArray(data)) {
-
+  if (
+    !Array.isArray(data) ||
+    data.length === 0
+  ) {
     return (
-      <div className="text-center py-10">
+      <div className="text-center py-10 text-gray-500">
         No Chart Data Available
       </div>
     );
   }
+
+  /* ==========================
+     PIE CHART
+  ========================== */
+
+  if (type === "pie") {
+    return (
+      <div className="h-96">
+
+        <ResponsiveContainer>
+
+          <PieChart>
+
+            <Pie
+              data={data}
+              dataKey="count"
+              nameKey="_id"
+              outerRadius={120}
+              label
+            >
+
+              {data.map(
+                (entry, index) => (
+                  <Cell
+                    key={index}
+                    fill={
+                      COLORS[
+                        index %
+                          COLORS.length
+                      ]
+                    }
+                  />
+                )
+              )}
+
+            </Pie>
+
+            <Tooltip />
+
+            <Legend />
+
+          </PieChart>
+
+        </ResponsiveContainer>
+
+      </div>
+    );
+  }
+
+  /* ==========================
+     BAR CHART
+  ========================== */
 
   return (
     <div className="h-96">
 
       <ResponsiveContainer>
 
-        <PieChart>
+        <BarChart
+          data={data}
+        >
 
-          <Pie
-            data={data}
-            dataKey="count"
-            nameKey="_id"
-            outerRadius={120}
-            label
-          >
+          <CartesianGrid strokeDasharray="3 3" />
 
-            {data.map(
-              (entry, index) => (
+          <XAxis dataKey="_id" />
 
-                <Cell
-                  key={index}
-                  fill={
-                    COLORS[
-                      index %
-                      COLORS.length
-                    ]
-                  }
-                />
-              )
-            )}
-
-          </Pie>
+          <YAxis />
 
           <Tooltip />
 
-        </PieChart>
+          <Legend />
+
+          <Bar
+            dataKey="count"
+            fill="#0B2E59"
+          />
+
+        </BarChart>
 
       </ResponsiveContainer>
 
