@@ -15,6 +15,7 @@ import {
 } from "../services/complaintService";
 
 const ComplaintListPage = () => {
+
   const [complaints, setComplaints] =
     useState([]);
 
@@ -38,60 +39,116 @@ const ComplaintListPage = () => {
 
   useEffect(() => {
     loadComplaints();
-  }, [page, search, status, sortBy]);
+  }, [
+    page,
+    search,
+    status,
+    sortBy,
+  ]);
 
-  const loadComplaints = async () => {
-    try {
-      const data =
-        await getComplaints(
-          page,
-          search,
-          status
+  const loadComplaints =
+    async () => {
+
+      try {
+
+        const data =
+          await getComplaints(
+            page,
+            search,
+            status
+          );
+
+        let complaintData =
+          [
+            ...(data.complaints || []),
+          ];
+
+        /* Latest */
+
+        if (
+          sortBy ===
+          "latest"
+        ) {
+
+          complaintData.sort(
+            (a, b) =>
+              new Date(
+                b.createdAt
+              ) -
+              new Date(
+                a.createdAt
+              )
+          );
+        }
+
+        /* Oldest */
+
+        if (
+          sortBy ===
+          "oldest"
+        ) {
+
+          complaintData.sort(
+            (a, b) =>
+              new Date(
+                a.createdAt
+              ) -
+              new Date(
+                b.createdAt
+              )
+          );
+        }
+
+        /* Priority */
+
+        if (
+          sortBy ===
+          "priority"
+        ) {
+
+          const priorityOrder =
+            {
+              Critical: 4,
+              High: 3,
+              Medium: 2,
+              Low: 1,
+            };
+
+          complaintData.sort(
+            (a, b) =>
+              priorityOrder[
+                b.priority
+              ] -
+              priorityOrder[
+                a.priority
+              ]
+          );
+        }
+
+        setComplaints(
+          complaintData
         );
 
-      let complaintData =
-        [...(data.complaints || [])];
-
-      if (
-        sortBy ===
-        "priority"
-      ) {
-        const priorityOrder = {
-          Critical: 4,
-          High: 3,
-          Medium: 2,
-          Low: 1,
-        };
-
-        complaintData.sort(
-          (a, b) =>
-            priorityOrder[
-              b.priority
-            ] -
-            priorityOrder[
-              a.priority
-            ]
+        setTotalPages(
+          data.totalPages || 1
         );
+
+      } catch (error) {
+
+        toast.error(
+          "Failed To Load Complaints"
+        );
+
+      } finally {
+
+        setLoading(false);
+
       }
-
-      setComplaints(
-        complaintData
-      );
-
-      setTotalPages(
-        data.totalPages || 1
-      );
-    } catch (error) {
-      toast.error(
-        "Failed To Load Complaints"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   const handleDelete =
     async (id) => {
+
       const confirmDelete =
         window.confirm(
           "Are you sure you want to delete this complaint?"
@@ -101,17 +158,23 @@ const ComplaintListPage = () => {
         return;
 
       try {
-        await deleteComplaint(id);
+
+        await deleteComplaint(
+          id
+        );
 
         toast.success(
           "Complaint Deleted Successfully"
         );
 
         loadComplaints();
+
       } catch (error) {
+
         toast.error(
           "Failed To Delete Complaint"
         );
+
       }
     };
 
@@ -121,6 +184,7 @@ const ComplaintListPage = () => {
 
   return (
     <div>
+
       <PageHeader
         title="My Complaints"
         subtitle="Track and manage grievances"
@@ -148,6 +212,7 @@ const ComplaintListPage = () => {
             }
             className="border rounded-lg px-4 py-3"
           >
+
             <option value="">
               All Status
             </option>
@@ -183,8 +248,13 @@ const ComplaintListPage = () => {
             }
             className="border rounded-lg px-4 py-3"
           >
+
             <option value="latest">
               Latest First
+            </option>
+
+            <option value="oldest">
+              Oldest First
             </option>
 
             <option value="priority">
@@ -234,7 +304,9 @@ const ComplaintListPage = () => {
             <tbody>
 
               {complaints.map(
-                (complaint) => (
+                (
+                  complaint
+                ) => (
 
                   <tr
                     key={
@@ -245,8 +317,7 @@ const ComplaintListPage = () => {
 
                     <td className="p-4 font-semibold text-[#0B2E59]">
                       {
-                        complaint.trackingId ||
-                        "N/A"
+                        complaint.trackingId
                       }
                     </td>
 
@@ -323,12 +394,8 @@ const ComplaintListPage = () => {
 
         <Pagination
           currentPage={page}
-          totalPages={
-            totalPages
-          }
-          onPageChange={
-            setPage
-          }
+          totalPages={totalPages}
+          onPageChange={setPage}
         />
 
       </Card>
