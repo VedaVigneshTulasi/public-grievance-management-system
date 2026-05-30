@@ -8,6 +8,7 @@ import StatusBadge from "../../../components/common/StatusBadge";
 import SearchBar from "../../../components/common/SearchBar";
 import Pagination from "../../../components/common/Pagination";
 import Skeleton from "../../../components/common/Skeleton";
+import PageLoader from "../../../components/common/PageLoader.jsx";
 
 import {
   getComplaints,
@@ -179,8 +180,8 @@ const ComplaintListPage = () => {
     };
 
   if (loading) {
-    return <Skeleton />;
-  }
+  return <PageLoader />;
+}
 
   return (
     <div>

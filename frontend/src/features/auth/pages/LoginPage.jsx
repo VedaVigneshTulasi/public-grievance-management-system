@@ -1,7 +1,5 @@
 import { useState } from "react";
-
 import { Link } from "react-router-dom";
-
 import toast from "react-hot-toast";
 
 import Input from "../../../components/ui/Input";
@@ -10,6 +8,9 @@ import Button from "../../../components/ui/Button";
 import { loginApi } from "../services/authService";
 
 const LoginPage = () => {
+
+  const [loading, setLoading] =
+    useState(false);
 
   const [formData, setFormData] =
     useState({
@@ -24,6 +25,7 @@ const LoginPage = () => {
       [e.target.name]:
         e.target.value,
     });
+
   };
 
   const handleSubmit = async (e) => {
@@ -31,6 +33,8 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
+
+      setLoading(true);
 
       const response =
         await loginApi(formData);
@@ -63,6 +67,7 @@ const LoginPage = () => {
 
         window.location.href =
           "/dashboard";
+
       }
 
     } catch (error) {
@@ -71,6 +76,11 @@ const LoginPage = () => {
         error.response?.data?.message ||
         "Login Failed"
       );
+
+    } finally {
+
+      setLoading(false);
+
     }
   };
 
@@ -81,9 +91,7 @@ const LoginPage = () => {
     >
 
       <h2 className="text-3xl font-bold text-center text-[#0B2E59]">
-
         Login
-
       </h2>
 
       <Input
@@ -104,23 +112,25 @@ const LoginPage = () => {
         placeholder="Enter Password"
       />
 
-      <Button type="submit">
-
-        Login
-
+      <Button
+        type="submit"
+        disabled={loading}
+      >
+        {
+          loading
+            ? "Logging In..."
+            : "Login"
+        }
       </Button>
 
       <p className="text-center">
-
         Don't have an account?{" "}
-
         <Link
           to="/register"
           className="text-blue-600"
         >
           Register
         </Link>
-
       </p>
 
     </form>

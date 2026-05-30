@@ -8,8 +8,7 @@ import toast from "react-hot-toast";
 import Card from "../../../components/ui/Card";
 import PageHeader from "../../../components/common/PageHeader";
 import StatusBadge from "../../../components/common/StatusBadge";
-import Skeleton from "../../../components/common/Skeleton";
-
+import PageLoader from "../../../components/common/PageLoader.jsx";
 import {
   getAllComplaints,
   updateComplaintStatus,
@@ -62,7 +61,7 @@ const loadComplaints =
     }
   };
   if (loading) {
-  return <Skeleton />;
+  return <PageLoader />;
 }
 
   const handleStatusChange =

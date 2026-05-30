@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 import Card from "../../../components/ui/Card";
 import PageHeader from "../../../components/common/PageHeader";
 import StatusBadge from "../../../components/common/StatusBadge";
-import Skeleton from "../../../components/common/Skeleton";
-
+import PageLoader from "../../../components/common/PageLoader.jsx";
 import { getComplaintById } from "../services/complaintService";
 
 const ComplaintDetailsPage = () => {
@@ -32,8 +31,8 @@ const ComplaintDetailsPage = () => {
   };
 
   if (loading) {
-    return <Skeleton />;
-  }
+  return <PageLoader />;
+}
 
   if (!complaint) {
     return (

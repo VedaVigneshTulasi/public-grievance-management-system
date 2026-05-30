@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FileText, Clock, CheckCircle, AlertTriangle } from "lucide-react";
 
 import Card from "../../../components/ui/Card";
-import Skeleton from "../../../components/common/Skeleton";
+import PageLoader from "../../../components/common/PageLoader.jsx";
 
 import AnalyticsChart from "../components/AnalyticsChart";
 
@@ -55,9 +55,9 @@ const DashboardPage = () => {
     }
   };
 
-  if (loading) {
-    return <Skeleton />;
-  }
+ if (loading) {
+  return <PageLoader />;
+}
 
   return (
     <div className="space-y-8">

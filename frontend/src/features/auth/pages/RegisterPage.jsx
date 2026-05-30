@@ -1,7 +1,5 @@
 import { useState } from "react";
-
 import { Link } from "react-router-dom";
-
 import toast from "react-hot-toast";
 
 import Input from "../../../components/ui/Input";
@@ -10,6 +8,9 @@ import Button from "../../../components/ui/Button";
 import { registerApi } from "../services/authService";
 
 const RegisterPage = () => {
+
+  const [loading, setLoading] =
+    useState(false);
 
   const [formData, setFormData] =
     useState({
@@ -25,6 +26,7 @@ const RegisterPage = () => {
       [e.target.name]:
         e.target.value,
     });
+
   };
 
   const handleSubmit = async (e) => {
@@ -32,6 +34,8 @@ const RegisterPage = () => {
     e.preventDefault();
 
     try {
+
+      setLoading(true);
 
       await registerApi(formData);
 
@@ -48,6 +52,11 @@ const RegisterPage = () => {
         error.response?.data?.message ||
         "Registration Failed"
       );
+
+    } finally {
+
+      setLoading(false);
+
     }
   };
 
@@ -58,9 +67,7 @@ const RegisterPage = () => {
     >
 
       <h2 className="text-3xl font-bold text-center text-[#0B2E59]">
-
         Register
-
       </h2>
 
       <Input
@@ -89,23 +96,25 @@ const RegisterPage = () => {
         placeholder="Enter Password"
       />
 
-      <Button type="submit">
-
-        Register
-
+      <Button
+        type="submit"
+        disabled={loading}
+      >
+        {
+          loading
+            ? "Registering..."
+            : "Register"
+        }
       </Button>
 
       <p className="text-center">
-
         Already have an account?{" "}
-
         <Link
           to="/login"
           className="text-blue-600"
         >
           Login
         </Link>
-
       </p>
 
     </form>
