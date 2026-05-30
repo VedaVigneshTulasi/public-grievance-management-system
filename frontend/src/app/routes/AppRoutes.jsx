@@ -1,8 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
@@ -24,38 +20,24 @@ import ComplaintDetailsPage from "../../features/complaints/pages/ComplaintDetai
 
 import AdminDashboardPage from "../../features/admin/pages/AdminDashboardPage";
 
-const AppRoutes = () => {
+import ActivityLogsPage from "../../features/admin/pages/ActivityLogsPage";
 
+const AppRoutes = () => {
   return (
     <BrowserRouter>
-
       <Routes>
-
         {/* Public */}
 
         <Route element={<MainLayout />}>
-
-          <Route
-            path="/"
-            element={<LandingPage />}
-          />
-
+          <Route path="/" element={<LandingPage />} />
         </Route>
 
         {/* Auth */}
 
         <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
 
-          <Route
-            path="/login"
-            element={<LoginPage />}
-          />
-
-          <Route
-            path="/register"
-            element={<RegisterPage />}
-          />
-
+          <Route path="/register" element={<RegisterPage />} />
         </Route>
 
         {/* Citizen */}
@@ -63,33 +45,17 @@ const AppRoutes = () => {
         <Route
           element={
             <ProtectedRoute>
-
               <DashboardLayout />
-
             </ProtectedRoute>
           }
         >
+          <Route path="/dashboard" element={<DashboardPage />} />
 
-          <Route
-            path="/dashboard"
-            element={<DashboardPage />}
-          />
+          <Route path="/complaints" element={<ComplaintListPage />} />
 
-          <Route
-            path="/complaints"
-            element={<ComplaintListPage />}
-          />
+          <Route path="/complaints/create" element={<CreateComplaintPage />} />
 
-          <Route
-            path="/complaints/create"
-            element={<CreateComplaintPage />}
-          />
-
-          <Route
-            path="/complaints/:id"
-            element={<ComplaintDetailsPage />}
-          />
-
+          <Route path="/complaints/:id" element={<ComplaintDetailsPage />} />
         </Route>
 
         {/* Admin */}
@@ -97,26 +63,17 @@ const AppRoutes = () => {
         <Route
           element={
             <ProtectedRoute>
-
               <AdminRoute>
-
                 <DashboardLayout />
-
               </AdminRoute>
-
             </ProtectedRoute>
           }
         >
-
-          <Route
-            path="/admin"
-            element={<AdminDashboardPage />}
-          />
-
+          <Route path="/admin" element={<AdminDashboardPage />} />
         </Route>
 
+        <Route path="/activity-logs" element={<ActivityLogsPage />} />
       </Routes>
-
     </BrowserRouter>
   );
 };

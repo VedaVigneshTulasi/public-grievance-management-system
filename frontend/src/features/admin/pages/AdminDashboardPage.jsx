@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import Card from "../../../components/ui/Card";
 import PageHeader from "../../../components/common/PageHeader";
 import StatusBadge from "../../../components/common/StatusBadge";
+import Skeleton from "../../../components/common/Skeleton";
 
 import {
   getAllComplaints,
@@ -19,6 +20,9 @@ const AdminDashboardPage = () => {
 
   const [complaints, setComplaints] =
     useState([]);
+
+    const [loading, setLoading] =
+  useState(true);
 
   const [selectedComplaint,
     setSelectedComplaint] =
@@ -34,25 +38,32 @@ const AdminDashboardPage = () => {
 
   }, []);
 
-  const loadComplaints =
-    async () => {
+const loadComplaints =
+  async () => {
 
-      try {
+    try {
 
-        const data =
-          await getAllComplaints();
+      const data =
+        await getAllComplaints();
 
-        setComplaints(
-          data.complaints || []
-        );
+      setComplaints(
+        data.complaints || []
+      );
 
-      } catch (error) {
+    } catch (error) {
 
-        toast.error(
-          "Failed to load complaints"
-        );
-      }
-    };
+      toast.error(
+        "Failed To Load Complaints"
+      );
+
+    } finally {
+
+      setLoading(false);
+    }
+  };
+  if (loading) {
+  return <Skeleton />;
+}
 
   const handleStatusChange =
     async (
