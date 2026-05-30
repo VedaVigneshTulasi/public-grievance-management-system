@@ -1,42 +1,51 @@
 import axiosInstance from "../../../services/axiosInstance";
 
-// Create Complaint
-export const createComplaint = async (
-  complaintData
-) => {
+/* ========================================
+   CREATE COMPLAINT
+======================================== */
 
-  const response =
-    await axiosInstance.post(
-      "/complaints",
-      complaintData
-    );
+export const createComplaint =
+  async (complaintData) => {
 
-  return response.data;
+    const response =
+      await axiosInstance.post(
+        "/complaints",
+        complaintData
+      );
+
+    return response.data;
 };
 
-// Get Complaints
-export const getComplaints = async (
-  page = 1,
-  search = "",
-  status = ""
-) => {
+/* ========================================
+   GET COMPLAINTS
+======================================== */
 
-  const response =
-    await axiosInstance.get(
-      "/complaints",
-      {
-        params: {
-          page,
-          search,
-          status,
-        },
-      }
-    );
+export const getComplaints =
+  async (
+    page = 1,
+    search = "",
+    status = ""
+  ) => {
 
-  return response.data;
+    const response =
+      await axiosInstance.get(
+        "/complaints",
+        {
+          params: {
+            page,
+            search,
+            status,
+          },
+        }
+      );
+
+    return response.data;
 };
 
-// Get Complaint By Id
+/* ========================================
+   GET COMPLAINT BY ID
+======================================== */
+
 export const getComplaintById =
   async (id) => {
 
@@ -48,7 +57,10 @@ export const getComplaintById =
     return response.data;
 };
 
-// Update Complaint
+/* ========================================
+   UPDATE COMPLAINT
+======================================== */
+
 export const updateComplaint =
   async (
     id,
@@ -64,13 +76,33 @@ export const updateComplaint =
     return response.data;
 };
 
-// Delete Complaint
+/* ========================================
+   DELETE COMPLAINT
+======================================== */
+
 export const deleteComplaint =
   async (id) => {
 
     const response =
       await axiosInstance.delete(
         `/complaints/${id}`
+      );
+
+    return response.data;
+};
+
+/* ========================================
+   TRACK COMPLAINT
+======================================== */
+
+export const trackComplaint =
+  async (
+    trackingId
+  ) => {
+
+    const response =
+      await axiosInstance.get(
+        `/complaints/track/${trackingId}`
       );
 
     return response.data;

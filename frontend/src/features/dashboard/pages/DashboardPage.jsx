@@ -1,60 +1,85 @@
 import { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
 
-import StatCard from "../../../components/common/StatCard";
-
-import { getDashboardStats } from "../services/dashboardService";
-
-import { getComplaints } from "../../complaints/services/complaintService";
-
-import { getStatusReport } from "../services/dashboardService";
-
-import { getDepartmentReport } from "../services/dashboardService";
+import {
+  FileText,
+  Clock,
+  CheckCircle,
+  AlertTriangle,
+} from "lucide-react";
 
 import Card from "../../../components/ui/Card";
-
 import Skeleton from "../../../components/common/Skeleton";
+
 import AnalyticsChart from "../components/AnalyticsChart";
 
+import {
+  getDashboardStats,
+  getStatusReport,
+  getDepartmentReport,
+} from "../services/dashboardService";
+
+import {
+  getComplaints,
+} from "../../complaints/services/complaintService";
+
 const DashboardPage = () => {
-  const [stats, setStats] = useState({});
+  const [stats, setStats] =
+    useState({});
 
-  const [complaints, setComplaints] = useState([]);
+  const [complaints, setComplaints] =
+    useState([]);
 
-  const [loading, setLoading] = useState(true);
+  const [statusReport, setStatusReport] =
+    useState([]);
 
-  const [statusReport, setStatusReport] = useState([]);
+  const [departmentReport, setDepartmentReport] =
+    useState([]);
 
-  const [departmentReport, setDepartmentReport] = useState([]);
+  const [loading, setLoading] =
+    useState(true);
 
   useEffect(() => {
     loadDashboard();
   }, []);
+
   const loadDashboard = async () => {
     try {
-      const statsData = await getDashboardStats();
 
-      const complaintsData = await getComplaints();
+      const statsData =
+        await getDashboardStats();
 
-      const statusData = await getStatusReport();
+      const complaintsData =
+        await getComplaints();
 
-      const departmentData = await getDepartmentReport();
+      const statusData =
+        await getStatusReport();
 
-      console.log("Status Report:", statusData);
-
-      console.log("Department Report:", departmentData);
-
-      setStatusReport(statusData);
-      setDepartmentReport(departmentData);
+      const departmentData =
+        await getDepartmentReport();
 
       setStats(statsData);
 
-      setComplaints(complaintsData.complaints || []);
+      setComplaints(
+        complaintsData.complaints || []
+      );
+
+      setStatusReport(
+        statusData.report || []
+      );
+
+      setDepartmentReport(
+        departmentData.report || []
+      );
+
     } catch (error) {
+
       console.log(error);
+
     } finally {
+
       setLoading(false);
+
     }
   };
 
@@ -63,63 +88,130 @@ const DashboardPage = () => {
   }
 
   return (
-    <div>
-      {/* Page Heading */}
+    <div className="space-y-8">
 
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-[#0B2E59]">Citizen Dashboard</h1>
+      {/* Header */}
 
-        <p className="text-gray-600 mt-2">Monitor and manage your grievances</p>
+      <div className="bg-gradient-to-r from-[#0B2E59] to-blue-800 rounded-2xl p-8 text-white">
+
+        <h1 className="text-4xl font-bold">
+          Citizen Dashboard
+        </h1>
+
+        <p className="mt-2 opacity-90">
+          Monitor complaints and track grievance progress
+        </p>
+
       </div>
 
-      {/* Stats */}
+      {/* Statistics */}
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <StatCard
-          title="Total Complaints"
-          value={stats.totalComplaints || 0}
-          color="text-blue-600"
-        />
+      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-        <StatCard
-          title="Pending"
-          value={stats.pendingComplaints || 0}
-          color="text-orange-500"
-        />
-
-        <StatCard
-          title="Resolved"
-          value={stats.resolvedComplaints || 0}
-          color="text-green-600"
-        />
-
-        <StatCard
-          title="Departments"
-          value={stats.totalDepartments || 0}
-          color="text-purple-600"
-        />
-      </div>
-
-      <div className="grid lg:grid-cols-2 gap-6 mt-8">
         <Card className="p-6">
-          <h2 className="text-xl font-bold mb-4">Complaint Status Report</h2>
+          <div className="flex items-center justify-between">
 
-          <AnalyticsChart data={statusReport} />
+            <div>
+
+              <p className="text-gray-500">
+                Total Complaints
+              </p>
+
+              <h2 className="text-3xl font-bold mt-2">
+                {stats.totalComplaints || 0}
+              </h2>
+
+            </div>
+
+            <FileText
+              size={40}
+              className="text-blue-600"
+            />
+
+          </div>
         </Card>
 
         <Card className="p-6">
-          <h2 className="text-xl font-bold mb-4">Department Report</h2>
+          <div className="flex items-center justify-between">
 
-          <AnalyticsChart data={departmentReport} />
+            <div>
+
+              <p className="text-gray-500">
+                Pending
+              </p>
+
+              <h2 className="text-3xl font-bold mt-2">
+                {stats.pendingComplaints || 0}
+              </h2>
+
+            </div>
+
+            <Clock
+              size={40}
+              className="text-orange-500"
+            />
+
+          </div>
         </Card>
+
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+
+            <div>
+
+              <p className="text-gray-500">
+                Resolved
+              </p>
+
+              <h2 className="text-3xl font-bold mt-2">
+                {stats.resolvedComplaints || 0}
+              </h2>
+
+            </div>
+
+            <CheckCircle
+              size={40}
+              className="text-green-600"
+            />
+
+          </div>
+        </Card>
+
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+
+            <div>
+
+              <p className="text-gray-500">
+                In Progress
+              </p>
+
+              <h2 className="text-3xl font-bold mt-2">
+                {stats.inProgressComplaints || 0}
+              </h2>
+
+            </div>
+
+            <AlertTriangle
+              size={40}
+              className="text-red-500"
+            />
+
+          </div>
+        </Card>
+
       </div>
 
       {/* Quick Actions */}
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-10">
-        <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+      <Card className="p-6">
+
+        <h2 className="text-xl font-bold mb-4">
+          Quick Actions
+        </h2>
 
         <div className="flex flex-wrap gap-4">
+
           <Link
             to="/complaints/create"
             className="bg-[#0B2E59] text-white px-6 py-3 rounded-lg"
@@ -133,40 +225,135 @@ const DashboardPage = () => {
           >
             View Complaints
           </Link>
+
+          <Link
+            to="/track"
+            className="border border-green-600 text-green-600 px-6 py-3 rounded-lg"
+          >
+            Public Tracking
+          </Link>
+
         </div>
+
+      </Card>
+
+      {/* Charts */}
+
+      <div className="grid lg:grid-cols-2 gap-6">
+
+        <Card className="p-6">
+
+          <h2 className="text-xl font-bold mb-6">
+            Complaint Status Report
+          </h2>
+
+          <AnalyticsChart
+            data={statusReport}
+          />
+
+        </Card>
+
+        <Card className="p-6">
+
+          <h2 className="text-xl font-bold mb-6">
+            Department Report
+          </h2>
+
+          <AnalyticsChart
+            data={departmentReport}
+          />
+
+        </Card>
+
       </div>
 
       {/* Recent Complaints */}
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h2 className="text-xl font-semibold mb-6">Recent Complaints</h2>
+      <Card className="p-6">
+
+        <h2 className="text-xl font-bold mb-6">
+          Recent Complaints
+        </h2>
 
         <div className="overflow-x-auto">
+
           <table className="w-full">
+
             <thead>
+
               <tr className="border-b">
-                <th className="text-left py-3">Title</th>
 
-                <th className="text-left py-3">Department</th>
+                <th className="text-left py-3">
+                  Tracking ID
+                </th>
 
-                <th className="text-left py-3">Status</th>
+                <th className="text-left py-3">
+                  Title
+                </th>
+
+                <th className="text-left py-3">
+                  Department
+                </th>
+
+                <th className="text-left py-3">
+                  Status
+                </th>
+
               </tr>
+
             </thead>
 
             <tbody>
-              {complaints.slice(0, 5).map((complaint) => (
-                <tr key={complaint._id} className="border-b">
-                  <td className="py-4">{complaint.title}</td>
 
-                  <td className="py-4">{complaint.department}</td>
+              {complaints
+                .slice(0, 5)
+                .map(
+                  (
+                    complaint
+                  ) => (
+                    <tr
+                      key={
+                        complaint._id
+                      }
+                      className="border-b"
+                    >
 
-                  <td className="py-4">{complaint.status}</td>
-                </tr>
-              ))}
+                      <td className="py-4 font-semibold text-[#0B2E59]">
+
+                        {complaint.trackingId}
+
+                      </td>
+
+                      <td className="py-4">
+
+                        {complaint.title}
+
+                      </td>
+
+                      <td className="py-4">
+
+                        {complaint.department}
+
+                      </td>
+
+                      <td className="py-4">
+
+                        {complaint.status}
+
+                      </td>
+
+                    </tr>
+                  )
+                )}
+
             </tbody>
+
           </table>
+
         </div>
-      </div>
+
+      </Card>
+
     </div>
   );
 };

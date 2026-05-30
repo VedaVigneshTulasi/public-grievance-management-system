@@ -18,6 +18,7 @@ import CreateComplaintPage from "../../features/complaints/pages/CreateComplaint
 import ComplaintListPage from "../../features/complaints/pages/ComplaintListPage";
 import ComplaintDetailsPage from "../../features/complaints/pages/ComplaintDetailsPage";
 import EditComplaintPage from "../../features/complaints/pages/EditComplaintPage";
+import PublicTrackingPage from "../../features/complaints/pages/PublicTrackingPage";
 
 import AdminDashboardPage from "../../features/admin/pages/AdminDashboardPage";
 import ActivityLogsPage from "../../features/admin/pages/ActivityLogsPage";
@@ -26,21 +27,40 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public */}
+
+        {/* Public Routes */}
 
         <Route element={<MainLayout />}>
-          <Route path="/" element={<LandingPage />} />
+
+          <Route
+            path="/"
+            element={<LandingPage />}
+          />
+
+          <Route
+            path="/track"
+            element={<PublicTrackingPage />}
+          />
+
         </Route>
 
-        {/* Auth */}
+        {/* Authentication */}
 
         <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
 
-          <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="/login"
+            element={<LoginPage />}
+          />
+
+          <Route
+            path="/register"
+            element={<RegisterPage />}
+          />
+
         </Route>
 
-        {/* Citizen */}
+        {/* Citizen Routes */}
 
         <Route
           element={
@@ -49,21 +69,35 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         >
-          <Route path="/dashboard" element={<DashboardPage />} />
 
-          <Route path="/complaints" element={<ComplaintListPage />} />
+          <Route
+            path="/dashboard"
+            element={<DashboardPage />}
+          />
 
-          <Route path="/complaints/create" element={<CreateComplaintPage />} />
+          <Route
+            path="/complaints"
+            element={<ComplaintListPage />}
+          />
 
-          <Route path="/complaints/:id" element={<ComplaintDetailsPage />} />
+          <Route
+            path="/complaints/create"
+            element={<CreateComplaintPage />}
+          />
+
+          <Route
+            path="/complaints/:id"
+            element={<ComplaintDetailsPage />}
+          />
 
           <Route
             path="/complaints/edit/:id"
             element={<EditComplaintPage />}
           />
+
         </Route>
 
-        {/* Admin */}
+        {/* Admin Routes */}
 
         <Route
           element={
@@ -74,10 +108,19 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         >
-          <Route path="/admin" element={<AdminDashboardPage />} />
 
-          <Route path="/activity-logs" element={<ActivityLogsPage />} />
+          <Route
+            path="/admin"
+            element={<AdminDashboardPage />}
+          />
+
+          <Route
+            path="/activity-logs"
+            element={<ActivityLogsPage />}
+          />
+
         </Route>
+
       </Routes>
     </BrowserRouter>
   );
