@@ -1,18 +1,16 @@
-const Button = ({
-  children,
-  type = "button",
-  onClick,
-}) => {
-
+const Button = ({ children, type = "button", onClick, disabled }) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className="w-full bg-[#0B2E59] hover:bg-blue-900 text-white py-3 rounded-lg font-semibold transition"
+      disabled={disabled}
+      className={`w-full rounded-3xl px-5 py-3 text-sm font-semibold text-white transition duration-200 ${
+        disabled
+          ? "cursor-not-allowed bg-slate-300 text-slate-700"
+          : "bg-[#0B2E59] hover:bg-[#123D82]"
+      }`}
     >
-
       {children}
-
     </button>
   );
 };

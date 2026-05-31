@@ -42,7 +42,7 @@ const AnalyticsChart = ({
 
   if (type === "pie") {
     return (
-      <div className="h-96">
+      <div className="h-72">
 
         <ResponsiveContainer>
 
@@ -89,12 +89,13 @@ const AnalyticsChart = ({
   ========================== */
 
   return (
-    <div className="h-96">
+    <div className="h-72">
 
       <ResponsiveContainer>
 
         <BarChart
           data={data}
+          margin={{ top: 20, right: 20, left: 10, bottom: 20 }}
         >
 
           <CartesianGrid strokeDasharray="3 3" />
@@ -108,8 +109,10 @@ const AnalyticsChart = ({
           <Legend />
 
           <Bar
-            dataKey="count"
+            dataKey="total"
             fill="#0B2E59"
+            barSize={24}
+            radius={[8, 8, 0, 0]}
           />
 
         </BarChart>

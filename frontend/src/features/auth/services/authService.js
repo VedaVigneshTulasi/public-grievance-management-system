@@ -23,3 +23,16 @@ export const registerApi =
 
     return response.data;
 };
+
+export const checkEmailExists = async (email) => {
+  try {
+    const response = await axiosInstance.post(
+      "/auth/check-email",
+      { email }
+    );
+    return response.data.exists;
+  } catch (error) {
+    // If endpoint doesn't exist, return false to not block registration
+    return false;
+  }
+};

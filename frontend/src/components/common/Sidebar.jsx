@@ -1,118 +1,94 @@
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   FileText,
   ShieldCheck,
-  LogOut,
+  Search,
   Menu,
   X,
+  User,
 } from "lucide-react";
-
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
-
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
-    window.location.href = "/login";
-  };
-
-  const menuItems = [
-    {
-      title: "Dashboard",
-      icon: <LayoutDashboard size={18} />,
-      path: "/dashboard",
-    },
-    {
-      title: "Lodge Complaint",
-      icon: <FileText size={18} />,
-      path: "/complaints/create",
-    },
-    {
-      title: "My Complaints",
-      icon: <FileText size={18} />,
-      path: "/complaints",
-    },
-
-    {
-      title: "Activity Logs",
-      path: "/activity-logs",
-    },
+  const citizenMenu = [
+    { title: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/dashboard" },
+    { title: "Lodge Complaint", icon: <FileText size={20} />, path: "/complaints/create" },
+    { title: "My Complaints", icon: <FileText size={20} />, path: "/complaints" },
+    { title: "Track Complaint", icon: <Search size={20} />, path: "/track" },
+    { title: "My Profile", icon: <User size={20} />, path: "/profile" },
   ];
+
+  const adminMenu = [
+    { title: "Admin Dashboard", icon: <ShieldCheck size={20} />, path: "/admin" },
+    { title: "Activity Logs", icon: <FileText size={20} />, path: "/activity-logs" },
+  ];
+
+  const menuItems = user?.role === "admin" ? adminMenu : citizenMenu;
 
   return (
     <>
-      {/* Mobile Toggle */}
-
       <button
         onClick={() => setOpen(!open)}
-        className="lg:hidden fixed top-4 left-4 z-50 bg-[#0B2E59] text-white p-2 rounded"
+        className="lg:hidden fixed top-4 left-4 z-50 inline-flex h-12 w-12 items-center justify-center rounded-3xl border border-slate-200 bg-white text-[#0B2E59] shadow-lg"
       >
         {open ? <X /> : <Menu />}
       </button>
 
-      {/* Overlay */}
+      {open && <div onClick={() => setOpen(false)} className="fixed inset-0 z-30 bg-slate-900/30 lg:hidden" />}
 
-      {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
-        />
-      )}
-
-      {/* Sidebar */}
-
-      <aside
-        className={`fixed top-0 left-0 h-screen w-72 bg-[#0B2E59] text-white z-40 transition-transform duration-300
-        ${open ? "translate-x-0" : "-translate-x-full"}
-        lg:translate-x-0`}
-      >
-        <div className="p-6 border-b border-blue-900">
-          <h1 className="text-xl font-bold">PGMS</h1>
-
-          <p className="text-sm text-gray-300 mt-1">Citizen Services Portal</p>
+      <aside className={`fixed top-0 left-0 h-screen w-72 bg-[#0B2E59] text-white shadow-2xl transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 z-40`}>
+        <div className="p-6 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-[#FF9933] text-[#0B2E59] font-bold shadow-inner">GOI</div>
+            <div>
+              <h1 className="text-2xl font-bold">PGMS</h1>
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-200">Citizen Portal</p>
+            </div>
+          </div>
         </div>
 
-        <nav className="p-4 space-y-2">
+        <div className="p-6">
+          <div className="rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-white text-[#0B2E59] shadow-sm">
+                <User size={22} />
+              </div>
+              <div>
+                <p className="font-semibold text-white">{user?.name || "Citizen"}</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-300">{user?.role || "User"}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav className="px-4 pb-6 space-y-2">
           {menuItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-lg transition
-                    ${isActive ? "bg-blue-800" : "hover:bg-blue-800"}`
+                `flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-semibold transition ${
+                  isActive
+                    ? "bg-white text-[#0B2E59] shadow-lg"
+                    : "text-slate-200 hover:bg-white/10 hover:text-white"
+                }`
               }
             >
               {item.icon}
-
               {item.title}
             </NavLink>
           ))}
-
-          {user?.role === "admin" && (
-            <NavLink
-              to="/admin"
-              className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-800"
-            >
-              <ShieldCheck size={18} />
-              Admin Dashboard
-            </NavLink>
-          )}
         </nav>
 
-        <div className="absolute bottom-0 w-full p-4 border-t border-blue-900">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 bg-red-600 hover:bg-red-700 px-4 py-3 rounded-lg"
-          >
-            <LogOut size={18} />
-            Logout
-          </button>
+        <div className="mt-auto px-6 pb-6">
+          <div className="rounded-3xl border border-white/10 bg-white/10 p-4 text-sm text-slate-200 shadow-sm">
+            <p className="font-semibold text-white">Public Grievance Management</p>
+            <p className="mt-2 text-slate-300">Government service delivery that is secure, transparent and citizen-centric.</p>
+          </div>
         </div>
       </aside>
     </>

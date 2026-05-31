@@ -9,388 +9,206 @@ import SearchBar from "../../../components/common/SearchBar";
 import Pagination from "../../../components/common/Pagination";
 import Skeleton from "../../../components/common/Skeleton";
 import PageLoader from "../../../components/common/PageLoader.jsx";
+import Table from "../../../components/common/Table";
 
-import {
-  getComplaints,
-  deleteComplaint,
-} from "../services/complaintService";
+import { getComplaints, deleteComplaint } from "../services/complaintService";
 
 const ComplaintListPage = () => {
+  const [complaints, setComplaints] = useState([]);
 
-  const [complaints, setComplaints] =
-    useState([]);
+  const [search, setSearch] = useState("");
 
-  const [search, setSearch] =
-    useState("");
+  const [status, setStatus] = useState("");
 
-  const [status, setStatus] =
-    useState("");
+  const [sortBy, setSortBy] = useState("latest");
 
-  const [sortBy, setSortBy] =
-    useState("latest");
+  const [page, setPage] = useState(1);
 
-  const [page, setPage] =
-    useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const [totalPages, setTotalPages] =
-    useState(1);
-
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadComplaints();
-  }, [
-    page,
-    search,
-    status,
-    sortBy,
-  ]);
+  }, [page, search, status, sortBy]);
 
-  const loadComplaints =
-    async () => {
+  const loadComplaints = async () => {
+    try {
+      const data = await getComplaints(page, search, status);
 
-      try {
+      let complaintData = [...(data.complaints || [])];
 
-        const data =
-          await getComplaints(
-            page,
-            search,
-            status
-          );
+      /* Latest */
 
-        let complaintData =
-          [
-            ...(data.complaints || []),
-          ];
-
-        /* Latest */
-
-        if (
-          sortBy ===
-          "latest"
-        ) {
-
-          complaintData.sort(
-            (a, b) =>
-              new Date(
-                b.createdAt
-              ) -
-              new Date(
-                a.createdAt
-              )
-          );
-        }
-
-        /* Oldest */
-
-        if (
-          sortBy ===
-          "oldest"
-        ) {
-
-          complaintData.sort(
-            (a, b) =>
-              new Date(
-                a.createdAt
-              ) -
-              new Date(
-                b.createdAt
-              )
-          );
-        }
-
-        /* Priority */
-
-        if (
-          sortBy ===
-          "priority"
-        ) {
-
-          const priorityOrder =
-            {
-              Critical: 4,
-              High: 3,
-              Medium: 2,
-              Low: 1,
-            };
-
-          complaintData.sort(
-            (a, b) =>
-              priorityOrder[
-                b.priority
-              ] -
-              priorityOrder[
-                a.priority
-              ]
-          );
-        }
-
-        setComplaints(
-          complaintData
+      if (sortBy === "latest") {
+        complaintData.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
-
-        setTotalPages(
-          data.totalPages || 1
-        );
-
-      } catch (error) {
-
-        toast.error(
-          "Failed To Load Complaints"
-        );
-
-      } finally {
-
-        setLoading(false);
-
       }
-    };
 
-  const handleDelete =
-    async (id) => {
+      /* Oldest */
 
-      const confirmDelete =
-        window.confirm(
-          "Are you sure you want to delete this complaint?"
+      if (sortBy === "oldest") {
+        complaintData.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
         );
-
-      if (!confirmDelete)
-        return;
-
-      try {
-
-        await deleteComplaint(
-          id
-        );
-
-        toast.success(
-          "Complaint Deleted Successfully"
-        );
-
-        loadComplaints();
-
-      } catch (error) {
-
-        toast.error(
-          "Failed To Delete Complaint"
-        );
-
       }
-    };
+
+      /* Priority */
+
+      if (sortBy === "priority") {
+        const priorityOrder = {
+          Critical: 4,
+          High: 3,
+          Medium: 2,
+          Low: 1,
+        };
+
+        complaintData.sort(
+          (a, b) => priorityOrder[b.priority] - priorityOrder[a.priority],
+        );
+      }
+
+      setComplaints(complaintData);
+
+      setTotalPages(data.totalPages || 1);
+    } catch (error) {
+      toast.error("Failed To Load Complaints");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this complaint?",
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteComplaint(id);
+
+      toast.success("Complaint Deleted Successfully");
+
+      loadComplaints();
+    } catch (error) {
+      toast.error("Failed To Delete Complaint");
+    }
+  };
 
   if (loading) {
-  return <PageLoader />;
-}
+    return <PageLoader />;
+  }
 
   return (
     <div>
-
       <PageHeader
         title="My Complaints"
-        subtitle="Track and manage grievances"
+        subtitle="Track and manage grievances through the Government portal"
       />
 
-      <Card className="p-6">
+      <Card className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-8">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.26em] text-[#123D82]">
+              Complaint Registry
+            </p>
+            <p className="mt-2 text-slate-600">
+              Review cases, check status updates, and manage your grievances.
+            </p>
+          </div>
 
-        <div className="flex flex-col lg:flex-row gap-4 mb-6">
+          <div className="flex flex-wrap gap-3">
+            <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="rounded-3xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none focus:border-[#0B2E59] focus:ring-2 focus:ring-[#0B2E59]/10"
+            >
+              <option value="">All Status</option>
+              <option>Pending</option>
+              <option>Under Review</option>
+              <option>In Progress</option>
+              <option>Resolved</option>
+              <option>Rejected</option>
+            </select>
 
-          <SearchBar
-            value={search}
-            onChange={(e) =>
-              setSearch(
-                e.target.value
-              )
-            }
-          />
-
-          <select
-            value={status}
-            onChange={(e) =>
-              setStatus(
-                e.target.value
-              )
-            }
-            className="border rounded-lg px-4 py-3"
-          >
-
-            <option value="">
-              All Status
-            </option>
-
-            <option>
-              Pending
-            </option>
-
-            <option>
-              Under Review
-            </option>
-
-            <option>
-              In Progress
-            </option>
-
-            <option>
-              Resolved
-            </option>
-
-            <option>
-              Rejected
-            </option>
-
-          </select>
-
-          <select
-            value={sortBy}
-            onChange={(e) =>
-              setSortBy(
-                e.target.value
-              )
-            }
-            className="border rounded-lg px-4 py-3"
-          >
-
-            <option value="latest">
-              Latest First
-            </option>
-
-            <option value="oldest">
-              Oldest First
-            </option>
-
-            <option value="priority">
-              Priority First
-            </option>
-
-          </select>
-
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="rounded-3xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none focus:border-[#0B2E59] focus:ring-2 focus:ring-[#0B2E59]/10"
+            >
+              <option value="latest">Latest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="priority">Priority First</option>
+            </select>
+          </div>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="w-full overflow-x-auto">
+          <Table
+            columns={[
+              "Tracking ID",
+              "Title",
+              "Department",
+              "Priority",
+              "Status",
+              "Actions",
+            ]}
+          >
+            {complaints.map((complaint) => (
+              <tr
+                key={complaint._id}
+                className="
+        hover:bg-slate-50
+        transition
+        "
+              >
+                <td className="px-3 py-4 font-semibold text-[#0B2E59] text-sm">
+                  {complaint.trackingId}
+                </td>
 
-          <table className="w-full">
+                <td className="px-3 py-4 max-w-[220px] break-words whitespace-normal">
+                  {complaint.title}
+                </td>
 
-            <thead>
+                <td className="px-3 py-4 max-w-[160px] break-words whitespace-normal">
+                  {complaint.department}
+                </td>
 
-              <tr className="bg-slate-100">
+                <td className="px-3 py-4">{complaint.priority}</td>
+                <td className="px-3 py-4 font-semibold text-[#0B2E59] text-sm">
+                  <StatusBadge status={complaint.status} />
+                </td>
 
-                <th className="p-4 text-left">
-                  Tracking ID
-                </th>
+                <td className="px-3 py-4 text-right">
+                  <div className="inline-flex flex-wrap justify-end gap-2">
+                    <Link
+                      to={`/complaints/${complaint._id}`}
+                      className="inline-flex items-center justify-center min-w-[72px] bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg text-xs font-medium transition hover:bg-blue-200"
+                    >
+                      View
+                    </Link>
 
-                <th className="p-4 text-left">
-                  Title
-                </th>
+                    <Link
+                      to={`/complaints/edit/${complaint._id}`}
+                      className="inline-flex items-center justify-center min-w-[72px] bg-green-100 text-green-700 px-3 py-1.5 rounded-lg text-xs font-medium transition hover:bg-green-200"
+                    >
+                      Edit
+                    </Link>
 
-                <th className="p-4 text-left">
-                  Department
-                </th>
-
-                <th className="p-4 text-left">
-                  Priority
-                </th>
-
-                <th className="p-4 text-left">
-                  Status
-                </th>
-
-                <th className="p-4 text-left">
-                  Actions
-                </th>
-
+                    <button
+                      onClick={() => handleDelete(complaint._id)}
+                      className="inline-flex items-center justify-center min-w-[72px] bg-red-100 text-red-700 px-3 py-1.5 rounded-lg text-xs font-medium transition hover:bg-red-200"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
               </tr>
-
-            </thead>
-
-            <tbody>
-
-              {complaints.map(
-                (
-                  complaint
-                ) => (
-
-                  <tr
-                    key={
-                      complaint._id
-                    }
-                    className="border-b hover:bg-slate-50"
-                  >
-
-                    <td className="p-4 font-semibold text-[#0B2E59]">
-                      {
-                        complaint.trackingId
-                      }
-                    </td>
-
-                    <td className="p-4">
-                      {
-                        complaint.title
-                      }
-                    </td>
-
-                    <td className="p-4">
-                      {
-                        complaint.department
-                      }
-                    </td>
-
-                    <td className="p-4">
-                      {
-                        complaint.priority
-                      }
-                    </td>
-
-                    <td className="p-4">
-
-                      <StatusBadge
-                        status={
-                          complaint.status
-                        }
-                      />
-
-                    </td>
-
-                    <td className="p-4">
-
-                      <div className="flex gap-3">
-
-                        <Link
-                          to={`/complaints/${complaint._id}`}
-                          className="text-blue-600 font-medium"
-                        >
-                          View
-                        </Link>
-
-                        <Link
-                          to={`/complaints/edit/${complaint._id}`}
-                          className="text-green-600 font-medium"
-                        >
-                          Edit
-                        </Link>
-
-                        <button
-                          onClick={() =>
-                            handleDelete(
-                              complaint._id
-                            )
-                          }
-                          className="text-red-600 font-medium"
-                        >
-                          Delete
-                        </button>
-
-                      </div>
-
-                    </td>
-
-                  </tr>
-                )
-              )}
-
-            </tbody>
-
-          </table>
-
+            ))}
+          </Table>
         </div>
 
         <Pagination
@@ -398,9 +216,7 @@ const ComplaintListPage = () => {
           totalPages={totalPages}
           onPageChange={setPage}
         />
-
       </Card>
-
     </div>
   );
 };

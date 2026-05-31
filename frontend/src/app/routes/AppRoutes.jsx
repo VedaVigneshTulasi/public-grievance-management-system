@@ -22,42 +22,26 @@ import PublicTrackingPage from "../../features/complaints/pages/PublicTrackingPa
 
 import AdminDashboardPage from "../../features/admin/pages/AdminDashboardPage";
 import ActivityLogsPage from "../../features/admin/pages/ActivityLogsPage";
+import ProfilePage from "../../features/profile/pages/ProfilePage";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* Public Routes */}
 
         <Route element={<MainLayout />}>
+          <Route path="/" element={<LandingPage />} />
 
-          <Route
-            path="/"
-            element={<LandingPage />}
-          />
-
-          <Route
-            path="/track"
-            element={<PublicTrackingPage />}
-          />
-
+          <Route path="/track" element={<PublicTrackingPage />} />
         </Route>
 
         {/* Authentication */}
 
         <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
 
-          <Route
-            path="/login"
-            element={<LoginPage />}
-          />
-
-          <Route
-            path="/register"
-            element={<RegisterPage />}
-          />
-
+          <Route path="/register" element={<RegisterPage />} />
         </Route>
 
         {/* Citizen Routes */}
@@ -69,32 +53,15 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         >
+          <Route path="/dashboard" element={<DashboardPage />} />
 
-          <Route
-            path="/dashboard"
-            element={<DashboardPage />}
-          />
+          <Route path="/complaints" element={<ComplaintListPage />} />
 
-          <Route
-            path="/complaints"
-            element={<ComplaintListPage />}
-          />
+          <Route path="/complaints/create" element={<CreateComplaintPage />} />
 
-          <Route
-            path="/complaints/create"
-            element={<CreateComplaintPage />}
-          />
+          <Route path="/complaints/:id" element={<ComplaintDetailsPage />} />
 
-          <Route
-            path="/complaints/:id"
-            element={<ComplaintDetailsPage />}
-          />
-
-          <Route
-            path="/complaints/edit/:id"
-            element={<EditComplaintPage />}
-          />
-
+          <Route path="/complaints/edit/:id" element={<EditComplaintPage />} />
         </Route>
 
         {/* Admin Routes */}
@@ -108,19 +75,12 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         >
+          <Route path="/admin" element={<AdminDashboardPage />} />
 
-          <Route
-            path="/admin"
-            element={<AdminDashboardPage />}
-          />
-
-          <Route
-            path="/activity-logs"
-            element={<ActivityLogsPage />}
-          />
-
+          <Route path="/activity-logs" element={<ActivityLogsPage />} />
         </Route>
 
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

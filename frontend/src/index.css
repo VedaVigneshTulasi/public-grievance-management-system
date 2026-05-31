@@ -113,12 +113,59 @@ code {
 
 @import "tailwindcss";
 
+:root {
+  --gov-navy: #0B2E59;
+  --gov-blue: #123D82;
+  --gov-saffron: #FF9933;
+  --gov-green: #138808;
+  --gov-slate: #64748B;
+  --gov-beige: #F5EFE6;
+  --bg: #F8FAFC;
+  --text: #0F172A;
+}
+
 body {
   margin: 0;
-  background: #f8fafc;
-  font-family:
-    Inter,
-    sans-serif;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--gov-blue);
+  color: #fff;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+html {
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0f172a;
+  --text: #f8fafc;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, sans-serif;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 * {

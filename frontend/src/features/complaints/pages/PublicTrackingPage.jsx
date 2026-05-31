@@ -1,11 +1,8 @@
 import { useState } from "react";
-
 import Card from "../../../components/ui/Card";
 import PageHeader from "../../../components/common/PageHeader";
-
-import {
-  trackComplaint,
-} from "../services/complaintService";
+import StatusBadge from "../../../components/common/StatusBadge";
+import { trackComplaint } from "../services/complaintService";
 
 const PublicTrackingPage = () => {
 
@@ -49,152 +46,71 @@ const PublicTrackingPage = () => {
     };
 
   return (
-    <div className="max-w-5xl mx-auto py-10">
+    <div className="max-w-5xl mx-auto py-10 space-y-8">
+      <PageHeader title="Public Complaint Tracking" subtitle="Track your grievance using the official tracking ID" />
 
-      <PageHeader
-        title="Public Complaint Tracking"
-        subtitle="Track complaint using Tracking ID"
-      />
-
-      <Card className="p-6 mb-8">
-
-        <div className="flex gap-4">
-
+      <Card className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-xl">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           <input
             type="text"
             value={trackingId}
-            onChange={(e) =>
-              setTrackingId(
-                e.target.value
-              )
-            }
+            onChange={(e) => setTrackingId(e.target.value)}
             placeholder="Enter Tracking ID"
-            className="flex-1 border rounded-lg px-4 py-3"
+            className="flex-1 rounded-3xl border border-slate-300 bg-slate-50 px-5 py-4 text-sm text-slate-700 shadow-sm focus:border-[#0B2E59] focus:outline-none focus:ring-2 focus:ring-[#0B2E59]/20"
           />
-
           <button
-            onClick={
-              handleSearch
-            }
-            className="bg-[#0B2E59] text-white px-6 rounded-lg"
+            onClick={handleSearch}
+            className="rounded-3xl bg-[#0B2E59] px-6 py-4 text-sm font-semibold text-white shadow hover:bg-[#123D82] transition"
           >
-            Track
+            Track Complaint
           </button>
-
         </div>
-
       </Card>
 
       {error && (
-
-        <Card className="p-6 text-red-600">
-
+        <Card className="rounded-[32px] border border-red-200 bg-red-50 p-6 text-red-800">
           {error}
-
         </Card>
-
       )}
 
       {complaint && (
-
-        <Card className="p-8">
-
-          <h2 className="text-2xl font-bold mb-6">
-
-            Complaint Details
-
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-6">
-
+        <Card className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-xl space-y-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-
-              <strong>
-                Tracking ID
-              </strong>
-
-              <p>
-                {
-                  complaint.trackingId
-                }
-              </p>
-
+              <h2 className="text-2xl font-bold text-[#0B2E59]">Complaint Details</h2>
+              <p className="text-slate-600">View the complaint status and description below.</p>
             </div>
-
-            <div>
-
-              <strong>
-                Status
-              </strong>
-
-              <p>
-                {
-                  complaint.status
-                }
-              </p>
-
-            </div>
-
-            <div>
-
-              <strong>
-                Department
-              </strong>
-
-              <p>
-                {
-                  complaint.department
-                }
-              </p>
-
-            </div>
-
-            <div>
-
-              <strong>
-                Priority
-              </strong>
-
-              <p>
-                {
-                  complaint.priority
-                }
-              </p>
-
-            </div>
-
-            <div>
-
-              <strong>
-                Location
-              </strong>
-
-              <p>
-                {
-                  complaint.location
-                }
-              </p>
-
-            </div>
-
+            <StatusBadge status={complaint.status} />
           </div>
 
-          <div className="mt-8">
-
-            <strong>
-              Description
-            </strong>
-
-            <p className="mt-2">
-              {
-                complaint.description
-              }
-            </p>
-
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="rounded-3xl bg-slate-50 p-5">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Tracking ID</p>
+              <p className="mt-3 font-semibold text-slate-900">{complaint.trackingId}</p>
+            </div>
+            <div className="rounded-3xl bg-slate-50 p-5">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Department</p>
+              <p className="mt-3 font-semibold text-slate-900">{complaint.department}</p>
+            </div>
+            <div className="rounded-3xl bg-slate-50 p-5">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Priority</p>
+              <p className="mt-3 font-semibold text-slate-900">{complaint.priority}</p>
+            </div>
+            <div className="rounded-3xl bg-slate-50 p-5">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Location</p>
+              <p className="mt-3 font-semibold text-slate-900">{complaint.location}</p>
+            </div>
+            <div className="rounded-3xl bg-slate-50 p-5">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Submitted</p>
+              <p className="mt-3 font-semibold text-slate-900">{new Date(complaint.createdAt).toLocaleDateString()}</p>
+            </div>
           </div>
 
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Description</p>
+            <p className="mt-3 text-slate-700 leading-7">{complaint.description}</p>
+          </div>
         </Card>
-
       )}
 
     </div>
