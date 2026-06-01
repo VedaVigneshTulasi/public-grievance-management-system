@@ -9,6 +9,10 @@ import {
   Menu,
   X,
   User,
+  Users,
+  Building2,
+  BarChart3,
+  Settings,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -50,6 +54,10 @@ const citizenMenu = [
 
   const adminMenu = [
     { title: "Admin Dashboard", icon: <ShieldCheck size={20} />, path: "/admin" },
+    { title: "User Management", icon: <Users size={20} />, path: "/admin/users" },
+    { title: "Department Management", icon: <Building2 size={20} />, path: "/admin/departments" },
+    { title: "System Reports", icon: <BarChart3 size={20} />, path: "/admin/reports" },
+    { title: "Settings", icon: <Settings size={20} />, path: "/admin/settings" },
     { title: "Activity Logs", icon: <FileText size={20} />, path: "/activity-logs" },
   ];
 

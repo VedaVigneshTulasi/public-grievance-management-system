@@ -22,6 +22,10 @@ import PublicTrackingPage from "../../features/complaints/pages/PublicTrackingPa
 
 import AdminDashboardPage from "../../features/admin/pages/AdminDashboardPage";
 import ActivityLogsPage from "../../features/admin/pages/ActivityLogsPage";
+import UserManagementPage from "../../features/admin/pages/UserManagementPage";
+import DepartmentManagementPage from "../../features/admin/pages/DepartmentManagementPage";
+import SystemReportsPage from "../../features/admin/pages/SystemReportsPage";
+import SettingsPage from "../../features/admin/pages/SettingsPage";
 import ProfilePage from "../../features/profile/pages/ProfilePage";
 
 const AppRoutes = () => {
@@ -78,6 +82,14 @@ const AppRoutes = () => {
           <Route path="/admin" element={<AdminDashboardPage />} />
 
           <Route path="/activity-logs" element={<ActivityLogsPage />} />
+
+          <Route path="/admin/users" element={<UserManagementPage />} />
+
+          <Route path="/admin/departments" element={<DepartmentManagementPage />} />
+
+          <Route path="/admin/reports" element={<SystemReportsPage />} />
+
+          <Route path="/admin/settings" element={<SettingsPage />} />
         </Route>
 
         <Route path="/profile" element={<ProfilePage />} />

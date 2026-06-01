@@ -120,12 +120,12 @@ const ComplaintListPage = () => {
               </p>
             </div>
 
-            <Link
+            {/* <Link
               to="/complaints/create"
               className="inline-flex items-center justify-center rounded-full bg-[#0B2E59] px-5 py-3 text-sm font-semibold text-white shadow hover:bg-[#123D82] transition"
             >
               Lodge New Complaint
-            </Link>
+            </Link> */}
           </div>
 
           <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
