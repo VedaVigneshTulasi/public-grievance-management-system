@@ -77,17 +77,51 @@ const [sortBy, setSortBy] = useState("latest");
     return <PageLoader />;
   }
 
-  const handleStatusChange = async (complaintId, status) => {
-    try {
-      await updateComplaintStatus(complaintId, status);
+const handleStatusChange = async (
+  complaintId,
+  status
+) => {
+  try {
 
-      toast.success("Status Updated");
+    let data = { status };
 
-      loadComplaints();
-    } catch {
-      toast.error("Update Failed");
+    if (status === "Rejected") {
+
+      const remark = window.prompt(
+        "Enter rejection reason"
+      );
+
+      if (!remark?.trim()) {
+        toast.error(
+          "Remark is required for rejection"
+        );
+        return;
+      }
+
+      data = {
+        status,
+        remark,
+      };
     }
-  };
+
+    await updateComplaintStatus(
+      complaintId,
+      data
+    );
+
+    toast.success("Status Updated");
+
+    loadComplaints();
+
+  } catch (error) {
+
+    toast.error(
+      error.response?.data?.message ||
+      "Update Failed"
+    );
+
+  }
+};
 
   const handleAddRemark = async () => {
     try {

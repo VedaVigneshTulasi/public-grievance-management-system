@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Printer } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Printer, Check } from "lucide-react";
+import toast from "react-hot-toast";
 
 import Card from "../../../components/ui/Card";
 import PageHeader from "../../../components/common/PageHeader";
@@ -14,16 +15,27 @@ const ComplaintDetailsPage = () => {
   const [complaint, setComplaint] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     loadComplaint();
-  }, []);
+  }, [id]);
 
   const loadComplaint = async () => {
     try {
       const data = await getComplaintById(id);
-      setComplaint(data.complaint);
+      // Support both shapes: { complaint } and direct complaint object
+      setComplaint(data?.complaint ?? data);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to load complaint:", error);
+      const msg = error?.response?.data?.message || error.message || "Failed to load complaint";
+      // If unauthorized, navigate back to list with a message
+      if (error?.response?.status === 403) {
+        toast.error(msg);
+        navigate("/complaints");
+        return;
+      }
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -86,18 +98,26 @@ const ComplaintDetailsPage = () => {
       <Card className="rounded-[32px] border border-slate-200 p-8 shadow-sm bg-white">
         <h2 className="text-2xl font-semibold text-[#0B2E59] mb-6">Status Progress</h2>
         <div className="space-y-6">
-          <div className="grid gap-4 sm:grid-cols-5">
-            {statuses.map((status, index) => (
-              <div key={status} className="text-center">
-                <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full text-lg font-bold text-white ${index <= currentIndex ? "bg-[#138808]" : "bg-slate-300"}`}>
-                  {index <= currentIndex ? "✓" : index + 1}
-                </div>
-                <p className="mt-3 text-sm font-semibold text-slate-900">{status}</p>
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between gap-2 md:gap-4">
+              {statuses.map((status, index) => {
+                const completed = index <= currentIndex;
+                return (
+                  <div key={status} className="flex-1 text-center">
+                    <div className={`mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full border ${completed ? "bg-[#138808] border-[#138808] text-white" : "bg-white border-slate-200 text-slate-700"}`}>
+                      {completed ? <Check size={16} /> : <span className="text-sm font-semibold">{index + 1}</span>}
+                    </div>
+                    <p className="text-xs font-semibold text-slate-900 uppercase">{status}</p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="w-full">
+              <div className="relative h-2 rounded-full bg-slate-200">
+                <div className="absolute left-0 top-0 h-2 rounded-full bg-[#138808] shadow-[0_6px_20px_rgba(19,136,8,0.12)] transition-all duration-500" style={{ width: `${progressWidth}%` }} />
               </div>
-            ))}
-          </div>
-          <div className="w-full rounded-full bg-slate-200 h-3 overflow-hidden">
-            <div className="h-3 rounded-full bg-[#138808] transition-all duration-500" style={{ width: `${progressWidth}%` }} />
+            </div>
           </div>
         </div>
       </Card>

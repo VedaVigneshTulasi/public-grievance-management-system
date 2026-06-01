@@ -7,6 +7,8 @@ import Button from "../../../components/ui/Button";
 
 import { loginApi } from "../services/authService";
 
+import { Mail, Lock, ShieldCheck } from "lucide-react";
+
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
 
@@ -17,12 +19,21 @@ const LoginPage = () => {
 
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  setFormData({
+    ...formData,
+    [name]: value,
+  });
+
+  if (errors[name]) {
+    setErrors({
+      ...errors,
+      [name]: "",
     });
-  };
+  }
+};
 
   const validateLogin = () => {
     const newErrors = {};
@@ -73,20 +84,40 @@ try {
   // console.log(formData);
 
   return (
+
     <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
-      <h2 className="text-3xl font-bold text-center text-[#0B2E59]">Login</h2>
+
+      <div className="mb-8 rounded-3xl border border-blue-100 bg-blue-50 p-5">
+  <div className="flex items-center gap-3 text-[#0B2E59]">
+    <ShieldCheck size={22} />
+    <span className="font-semibold">
+      Secure Government Authentication
+    </span>
+  </div>
+
+  <p className="mt-3 text-sm text-slate-600">
+    Login securely to lodge complaints, track grievance status,
+    receive updates and communicate with departments.
+  </p>
+</div>
+      <h2 className="text-5xl font-bold text-[#0B2E59]">
+  Welcome Back
+</h2>
+
+<p className="mt-3 text-lg text-slate-500">
+  Access your grievance dashboard
+</p>
 <Input
   label="Email"
   type="email"
   name="email"
   value={formData.email}
   onChange={handleChange}
-  placeholder="Enter Email"
+  placeholder="Enter Email Address"
+  icon={<Mail size={20} />}
   error={errors.email}
-  autoComplete="new-email"
 />
 
-      {/* {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>} */}
 <Input
   label="Password"
   type="password"
@@ -94,8 +125,8 @@ try {
   value={formData.password}
   onChange={handleChange}
   placeholder="Enter Password"
+  icon={<Lock size={20} />}
   error={errors.password}
-  autoComplete="new-password"
 />
 {/* 
       {errors.password && (

@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import indiaEmblem from "../../assets/logo/indiaEmblem.jpg";
 
 const MainLayout = () => {
   const today = new Date().toLocaleDateString("en-IN", {
@@ -15,13 +16,27 @@ const MainLayout = () => {
           <div className="flex flex-wrap items-center gap-4">
             <span>{today}</span>
             <span className="text-slate-300">|</span>
-            <span>Help Desk: <strong>1800-123-4567</strong></span>
+            <span>
+              Help Desk: <strong>1800-123-4567</strong>
+            </span>
             <span className="text-slate-300">|</span>
-            <span>Email: <strong>support@pgms.gov.in</strong></span>
+            <span>
+              Email: <strong>support@pgms.gov.in</strong>
+            </span>
           </div>
           <div className="flex items-center gap-6">
-            <a href="#accessibility" className="underline decoration-slate-200 decoration-2">Accessibility</a>
-            <a href="mailto:support@pgms.gov.in" className="underline decoration-slate-200 decoration-2">Contact</a>
+            <a
+              href="#accessibility"
+              className="underline decoration-slate-200 decoration-2"
+            >
+              Accessibility
+            </a>
+            <a
+              href="mailto:support@pgms.gov.in"
+              className="underline decoration-slate-200 decoration-2"
+            >
+              Contact
+            </a>
           </div>
         </div>
       </div>
@@ -29,8 +44,12 @@ const MainLayout = () => {
       <header className="bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col lg:flex-row items-center justify-between gap-5">
           <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-3xl border border-slate-200 bg-[#F5EFE6] shadow-sm">
-              <span className="text-2xl font-bold text-[#0B2E59]">🇮🇳</span>
+            <div className="flex">
+              <img
+                src={indiaEmblem}
+                alt="Government of India"
+                className="h-20 w-auto object-contain"
+              />
             </div>
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#123D82]">
@@ -65,7 +84,8 @@ const MainLayout = () => {
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-white">About Portal</h3>
             <p className="text-sm text-slate-300 leading-7">
-              A secure platform for citizens to lodge grievances, track progress and receive timely resolutions from government departments.
+              A secure platform for citizens to lodge grievances, track progress
+              and receive timely resolutions from government departments.
             </p>
           </div>
           <div>
@@ -79,7 +99,9 @@ const MainLayout = () => {
             </ul>
           </div>
           <div>
-            <h3 className="text-xl font-semibold text-white">Citizen Services</h3>
+            <h3 className="text-xl font-semibold text-white">
+              Citizen Services
+            </h3>
             <ul className="mt-4 space-y-2 text-sm text-slate-300">
               <li>Submit Complaint</li>
               <li>Track Status</li>

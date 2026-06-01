@@ -12,9 +12,9 @@ const AuthLayout = () => {
     <div className="min-h-screen bg-slate-50">
       <div className="min-h-screen flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-6xl grid lg:grid-cols-[1.2fr_0.8fr] rounded-[32px] overflow-hidden shadow-2xl bg-white">
-          <div className="hidden lg:flex flex-col justify-between bg-[#0B2E59] p-14 text-white">
-            <div>
-              <div className="inline-flex items-center gap-3 bg-white/10 px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-[0.24em]">
+          <div className="hidden lg:flex flex-col bg-[#0B2E59] p-14 text-white">
+            <div className="space-y-8">
+  <div className="inline-flex items-center gap-3 bg-white/10 px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-[0.24em]">
                 Citizen Services Portal
               </div>
               <h1 className="text-5xl font-bold mt-10 leading-tight">
@@ -27,7 +27,7 @@ const AuthLayout = () => {
               </p>
             </div>
 
-            <div className="mt-10 grid gap-5">
+           <div className="mt-12 grid gap-4">
               <div className="rounded-3xl bg-white/10 p-5 shadow-inner">
                 <div className="flex items-center gap-3 text-slate-100">
                   <ShieldCheck size={20} className="text-[#FF9933]" />
@@ -49,8 +49,8 @@ const AuthLayout = () => {
             </div>
           </div>
 
-          <div className="p-8 md:p-12">
-            <div className="mb-8 rounded-3xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-sm">
+          <div className="p-8 md:p-12 flex items-center">
+            {/* <div className="mb-8 rounded-3xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-sm">
               <p className="text-xs uppercase tracking-[0.24em] text-slate-400">
                 Government of India
               </p>
@@ -58,10 +58,10 @@ const AuthLayout = () => {
               <p className="mt-2 text-slate-600">
                 Access grievance services, lodge new complaints, and track resolutions from your dashboard.
               </p>
-            </div>
-            <div className="w-full max-w-md">
-              <Outlet />
-            </div>
+            </div> */}
+           <div className="w-full max-w-lg mx-auto">
+  <Outlet />
+</div>
           </div>
         </div>
       </div>

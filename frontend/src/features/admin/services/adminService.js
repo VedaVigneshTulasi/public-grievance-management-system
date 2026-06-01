@@ -16,13 +16,13 @@ export const getAllComplaints =
 export const updateComplaintStatus =
   async (
     complaintId,
-    status
+    data
   ) => {
 
     const response =
       await axiosInstance.patch(
         `/admin/status/${complaintId}`,
-        { status }
+        data
       );
 
     return response.data;

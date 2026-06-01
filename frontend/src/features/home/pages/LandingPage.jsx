@@ -1,13 +1,37 @@
 import { ArrowRight, FileText, Building2, CheckCircle, ShieldCheck, Clock, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import govtBanner from "../../../assets/images/govtBanner.png";
+
+
 const LandingPage = () => {
+
+
+  const grievanceStats = [
+    {
+      title: "Complaints Received",
+      value: "12,842",
+    },
+    {
+      title: "Resolved Cases",
+      value: "11,965",
+    },
+    {
+      title: "Resolution Rate",
+      value: "93%",
+    },
+    {
+      title: "Departments",
+      value: "42",
+    },
+  ];
+
+
   return (
     <div className="bg-slate-50">
       <section className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">
-            <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Government of India</p>
+            < p className="text-xs uppercase tracking-[0.24em] text-slate-500">Government of India</p>
             <h2 className="text-2xl font-semibold text-[#0B2E59]">Citizen Services Portal</h2>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
@@ -64,11 +88,11 @@ const LandingPage = () => {
           </div>
 
           <div className="rounded-[40px] bg-slate-950/80 p-8 shadow-2xl ring-1 ring-white/10">
-            <div className="aspect-[4/3] overflow-hidden rounded-[32px]">
+            <div className="h-[350px] overflow-hidden rounded-[32px]">
   <img
     src={govtBanner}
     alt="Government Banner"
-    className="w-full h-full object-cover"
+    className="w-full h-full object-contain bg-white"
   />
 </div>
             <div className="mt-8 grid gap-4">
@@ -87,12 +111,73 @@ const LandingPage = () => {
 
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid gap-8 lg:grid-cols-2">
-          <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-[#0B2E59]">Government Services</h2>
-            <p className="text-slate-600 max-w-2xl">
-              Citizens can raise grievances across critical public sectors. Every case is monitored by department officials and tracked to completion.
-            </p>
-          </div>
+         <div className="space-y-8">
+  <div>
+    <h2 className="text-4xl font-bold text-[#0B2E59]">
+      Government Services
+    </h2>
+
+    <p className="mt-4 text-lg text-slate-600 max-w-2xl">
+      Citizens can raise grievances across critical public sectors.
+      Every complaint is monitored by department officials and
+      tracked until resolution.
+    </p>
+  </div>
+
+  <div className="grid grid-cols-2 gap-4">
+
+    <div className="rounded-3xl bg-white p-6 border border-slate-200 shadow-sm">
+      <p className="text-sm text-slate-500">
+        Complaints Received
+      </p>
+      <h3 className="mt-2 text-3xl font-bold text-[#0B2E59]">
+        12,842
+      </h3>
+    </div>
+
+    <div className="rounded-3xl bg-white p-6 border border-slate-200 shadow-sm">
+      <p className="text-sm text-slate-500">
+        Resolved Cases
+      </p>
+      <h3 className="mt-2 text-3xl font-bold text-[#138808]">
+        11,965
+      </h3>
+    </div>
+
+    <div className="rounded-3xl bg-white p-6 border border-slate-200 shadow-sm">
+      <p className="text-sm text-slate-500">
+        Departments
+      </p>
+      <h3 className="mt-2 text-3xl font-bold text-[#FF9933]">
+        42
+      </h3>
+    </div>
+
+    <div className="rounded-3xl bg-white p-6 border border-slate-200 shadow-sm">
+      <p className="text-sm text-slate-500">
+        Resolution Rate
+      </p>
+      <h3 className="mt-2 text-3xl font-bold text-[#138808]">
+        93%
+      </h3>
+    </div>
+
+  </div>
+
+  <div className="rounded-3xl bg-[#0B2E59] p-6 text-white">
+    <h3 className="text-xl font-semibold">
+      Citizen Charter
+    </h3>
+
+    <ul className="mt-4 space-y-3 text-slate-200">
+      <li>✓ Transparent grievance handling</li>
+      <li>✓ Real-time complaint tracking</li>
+      <li>✓ Department accountability</li>
+      <li>✓ Faster issue resolution</li>
+    </ul>
+  </div>
+</div>
+          
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0B2E59] text-white shadow">
@@ -153,40 +238,108 @@ const LandingPage = () => {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-6">
-            <p className="text-sm uppercase tracking-[0.3em] text-[#123D82]">FAQs</p>
-            <h2 className="text-4xl font-bold text-[#0B2E59]">Frequently asked questions</h2>
-            <div className="space-y-4">
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h3 className="font-semibold text-slate-900">How can I track my complaint?</h3>
-                <p className="mt-3 text-slate-600">Use the Track Complaint option and enter your grievance Tracking ID to view updates.</p>
-              </div>
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h3 className="font-semibold text-slate-900">Can I edit a lodged complaint?</h3>
-                <p className="mt-3 text-slate-600">Yes, registered citizens can update their complaint details before it enters the resolution stage.</p>
-              </div>
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h3 className="font-semibold text-slate-900">Is the grievance portal available to everyone?</h3>
-                <p className="mt-3 text-slate-600">Yes, it is open for citizens across India to submit and monitor public service grievances.</p>
-              </div>
-            </div>
-          </div>
-          <div className="space-y-6">
-            <p className="text-sm uppercase tracking-[0.3em] text-[#123D82]">Testimonials</p>
-            <div className="space-y-4">
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <p className="text-slate-600">“The portal made it easy to lodge my complaint and I received updates every step of the way.”</p>
-                <p className="mt-4 font-semibold text-slate-900">— A Citizen from Delhi</p>
-              </div>
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <p className="text-slate-600">“Excellent government support and fast resolution. The dashboard feels professional and trustworthy.”</p>
-                <p className="mt-4 font-semibold text-slate-900">— Public Grievance User</p>
-              </div>
-            </div>
-          </div>
+  <div className="grid gap-12 lg:grid-cols-2 items-start">
+
+    {/* FAQ */}
+    <div>
+      <p className="text-sm uppercase tracking-[0.3em] text-[#123D82]">
+        FAQs
+      </p>
+
+      <h2 className="mt-3 text-4xl font-bold text-[#0B2E59]">
+        Frequently Asked Questions
+      </h2>
+
+      <div className="mt-8 space-y-4">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h3 className="font-semibold text-slate-900">
+            How can I track my complaint?
+          </h3>
+
+          <p className="mt-3 text-slate-600">
+            Use the Track Complaint option and enter your grievance Tracking ID.
+          </p>
         </div>
-      </section>
+
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h3 className="font-semibold text-slate-900">
+            Can I edit a lodged complaint?
+          </h3>
+
+          <p className="mt-3 text-slate-600">
+            Yes, before the complaint reaches the resolution stage.
+          </p>
+        </div>
+
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h3 className="font-semibold text-slate-900">
+            Is the portal available across India?
+          </h3>
+
+          <p className="mt-3 text-slate-600">
+            Yes, citizens from all states and union territories can use it.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Government Performance */}
+    <div>
+      <p className="text-sm uppercase tracking-[0.3em] text-[#123D82]">
+        Government Performance
+      </p>
+
+      <h2 className="mt-3 text-4xl font-bold text-[#0B2E59]">
+        Public Service Analytics
+      </h2>
+
+      <div className="mt-8 grid gap-4">
+
+        <div className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
+          <p className="text-slate-500 text-sm">
+            Citizen Satisfaction
+          </p>
+
+          <h3 className="mt-2 text-4xl font-bold text-[#138808]">
+            93%
+          </h3>
+        </div>
+
+        <div className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
+          <p className="text-slate-500 text-sm">
+            Average Resolution Time
+          </p>
+
+          <h3 className="mt-2 text-4xl font-bold text-[#0B2E59]">
+            7 Days
+          </h3>
+        </div>
+
+        <div className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
+          <p className="text-slate-500 text-sm">
+            Complaints Resolved
+          </p>
+
+          <h3 className="mt-2 text-4xl font-bold text-[#138808]">
+            11,965
+          </h3>
+        </div>
+
+        <div className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
+          <p className="text-slate-500 text-sm">
+            Active Departments
+          </p>
+
+          <h3 className="mt-2 text-4xl font-bold text-[#FF9933]">
+            42
+          </h3>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
     </div>
   );
 };

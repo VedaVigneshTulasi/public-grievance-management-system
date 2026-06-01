@@ -158,49 +158,43 @@ const ComplaintListPage = () => {
             ]}
           >
             {complaints.map((complaint) => (
-              <tr
-                key={complaint._id}
-                className="
-        hover:bg-slate-50
-        transition
-        "
-              >
-                <td className="px-3 py-4 font-semibold text-[#0B2E59] text-sm">
+              <tr key={complaint._id} className="odd:bg-slate-50 hover:bg-slate-100 transition">
+                <td className="px-3 py-4 align-middle font-semibold text-[#0B2E59] text-sm whitespace-nowrap">
                   {complaint.trackingId}
                 </td>
 
-                <td className="px-3 py-4 max-w-[220px] break-words whitespace-normal">
+                <td className="px-3 py-4 align-middle max-w-[220px] break-words whitespace-normal">
                   {complaint.title}
                 </td>
 
-                <td className="px-3 py-4 max-w-[160px] break-words whitespace-normal">
+                <td className="px-3 py-4 align-middle max-w-[160px] break-words whitespace-normal">
                   {complaint.department}
                 </td>
 
-                <td className="px-3 py-4">{complaint.priority}</td>
-                <td className="px-3 py-4 font-semibold text-[#0B2E59] text-sm">
+                <td className="px-3 py-4 align-middle whitespace-nowrap">{complaint.priority}</td>
+                <td className="px-3 py-4 align-middle font-semibold text-[#0B2E59] text-sm whitespace-nowrap">
                   <StatusBadge status={complaint.status} />
                 </td>
 
-                <td className="px-3 py-4 text-right">
-                  <div className="inline-flex flex-wrap justify-end gap-2">
+                <td className="px-3 py-4 align-middle text-right">
+                  <div className="inline-flex items-center justify-end gap-2 whitespace-nowrap">
                     <Link
                       to={`/complaints/${complaint._id}`}
-                      className="inline-flex items-center justify-center min-w-[72px] bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg text-xs font-medium transition hover:bg-blue-200"
+                      className="inline-flex items-center justify-center h-8 rounded-md bg-slate-100 px-3 text-xs font-semibold text-slate-700 transition hover:bg-slate-200"
                     >
                       View
                     </Link>
 
                     <Link
                       to={`/complaints/edit/${complaint._id}`}
-                      className="inline-flex items-center justify-center min-w-[72px] bg-green-100 text-green-700 px-3 py-1.5 rounded-lg text-xs font-medium transition hover:bg-green-200"
+                      className="inline-flex items-center justify-center h-8 rounded-md bg-emerald-100 px-3 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-200"
                     >
                       Edit
                     </Link>
 
                     <button
                       onClick={() => handleDelete(complaint._id)}
-                      className="inline-flex items-center justify-center min-w-[72px] bg-red-100 text-red-700 px-3 py-1.5 rounded-lg text-xs font-medium transition hover:bg-red-200"
+                      className="inline-flex items-center justify-center h-8 rounded-md bg-rose-100 px-3 text-xs font-semibold text-rose-700 transition hover:bg-rose-200"
                     >
                       Delete
                     </button>

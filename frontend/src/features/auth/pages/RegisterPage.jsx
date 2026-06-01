@@ -7,6 +7,13 @@ import Button from "../../../components/ui/Button";
 
 import { registerApi, checkEmailExists } from "../services/authService";
 
+import {
+  User,
+  Mail,
+  Lock,
+  ShieldCheck,
+} from "lucide-react";
+
 const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
 
@@ -59,8 +66,8 @@ const RegisterPage = () => {
     // Password validation - strength requirements
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
     } else if (!/[A-Z]/.test(formData.password)) {
       newErrors.password = "Password must contain at least one uppercase letter";
     } else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(formData.password)) {
@@ -111,49 +118,81 @@ const RegisterPage = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
-      <h2 className="text-3xl font-bold text-center text-[#0B2E59]">
-        Register
-      </h2>
+     <div className="text-center">
+  <h2 className="text-4xl font-bold text-[#0B2E59]">
+    Create Account
+  </h2>
 
- <Input
+  <p className="mt-2 text-slate-500">
+    Register to submit and track grievances
+  </p>
+
+  <div className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-green-50 border border-green-200 p-3">
+    <ShieldCheck
+      size={18}
+      className="text-green-600"
+    />
+
+    <span className="text-sm font-medium text-green-700">
+      Secure Government Registration
+    </span>
+  </div>
+</div>
+
+<Input
   label="Name"
   name="name"
   value={formData.name}
   onChange={handleChange}
-  placeholder="Enter Name"
+  placeholder="Enter Full Name"
   error={errors.name}
+  icon={<User size={18} />}
 />
 
       {/* {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>} */}
 
-  <Input
+<Input
   label="Email"
   type="email"
   name="email"
   value={formData.email}
   onChange={handleChange}
-  placeholder="Enter Email"
+  placeholder="Enter Email Address"
   error={errors.email}
   autoComplete="off"
+  icon={<Mail size={18} />}
 />
 
       {/* {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>} */}
 
-   <Input
+ <Input
   label="Password"
   type="password"
   name="password"
   value={formData.password}
   onChange={handleChange}
-  placeholder="Enter Password"
+  placeholder="Create Password"
   error={errors.password}
   autoComplete="new-password"
+  icon={<Lock size={18} />}
 />
+{/* 
+<div className="rounded-2xl bg-blue-50 border border-blue-100 p-4">
+  <p className="text-sm font-semibold text-[#0B2E59]">
+    Password Requirements
+  </p>
+
+  <ul className="mt-2 text-xs text-slate-600 space-y-1">
+    <li>• Minimum 8 characters</li>
+    <li>• One uppercase letter</li>
+    <li>• One special character</li>
+  </ul>
+</div> */}
       {/* {errors.password && (
         <p className="text-red-500 text-sm">{errors.password}</p>
       )} */}
 
- <Input
+<Input
   label="Confirm Password"
   type="password"
   name="confirmPassword"
@@ -162,15 +201,22 @@ const RegisterPage = () => {
   placeholder="Confirm Password"
   error={errors.confirmPassword}
   autoComplete="new-password"
+  icon={<Lock size={18} />}
 />
 {/* 
       {errors.confirmPassword && (
         <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
       )} */}
 
-      <Button type="submit" disabled={loading}>
-        {loading ? "Registering..." : "Register"}
-      </Button>
+    <Button
+  type="submit"
+  disabled={loading}
+  className="w-full rounded-2xl py-4 text-lg font-semibold"
+>
+  {loading
+    ? "Creating Account..."
+    : "Create Account"}
+</Button>
 
       <p className="text-center">
         Already have an account?{" "}
