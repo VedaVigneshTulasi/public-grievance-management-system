@@ -152,7 +152,7 @@ const handleStatusChange = async (
   return (
     <div>
       <PageHeader
-        title="Admin Dashboard"
+        title="Grievance Insights"
         subtitle="Manage complaints and resolutions"
       />
 

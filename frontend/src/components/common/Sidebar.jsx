@@ -53,7 +53,7 @@ const citizenMenu = [
 ];
 
   const adminMenu = [
-    { title: "Admin Dashboard", icon: <ShieldCheck size={20} />, path: "/admin" },
+    { title: "Admin Dashboard", icon: <ShieldCheck size={20} />, path: "/admin", exact: true },
     { title: "User Management", icon: <Users size={20} />, path: "/admin/users" },
     { title: "Department Management", icon: <Building2 size={20} />, path: "/admin/departments" },
     { title: "System Reports", icon: <BarChart3 size={20} />, path: "/admin/reports" },
@@ -82,7 +82,7 @@ const citizenMenu = [
             </div>
             <div>
               <h1 className="text-2xl font-bold">PGMS</h1>
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-200">Citizen Portal</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-200">{user?.role === "admin" ? "Admin Portal" : "Citizen Portal"}</p>
             </div>
           </div>
         </div>
@@ -110,9 +110,9 @@ const citizenMenu = [
         </nav>
 
         <div className="mt-auto px-6 pb-6">
-          <div className="rounded-3xl border border-white/10 bg-white/10 p-4 text-sm text-slate-200 shadow-sm">
-            <p className="font-semibold text-white">Public Grievance Management</p>
-            <p className="mt-2 text-slate-300">Government service delivery that is secure, transparent and citizen-centric.</p>
+          <div className="rounded-3xl border border-white/10 bg-white/10 p-3 text-xs text-slate-200 shadow-sm overflow-hidden">
+            <p className="font-semibold text-white truncate">Public Grievance Management</p>
+            <p className="mt-1 text-slate-300 leading-tight break-words">Government service delivery that is secure, transparent and citizen-centric.</p>
           </div>
         </div>
       </aside>

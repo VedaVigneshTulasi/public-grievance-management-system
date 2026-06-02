@@ -42,20 +42,14 @@ const DashboardPage = () => {
   }
 
   const topComplaints = complaints.slice(0, 5);
+  const userName = JSON.parse(localStorage.getItem("user"))?.name || "Citizen";
 
   return (
     <div className="min-h-screen bg-slate-50 p-6">
-      {/* Header Section */}
-      <div className="mb-8">
-        <div className="flex flex-wrap items-center gap-3 mb-3">
-          <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-emerald-700">
-            Government of India
-          </span>
-          <span className="text-sm text-slate-500">Citizen Grievance Portal</span>
-        </div>
-        <h1 className="text-3xl font-bold text-[#0B2E59] mb-2">Public Grievance Management System</h1>
-        <p className="text-slate-600">Welcome back, <span className="font-semibold text-[#0B2E59]">{JSON.parse(localStorage.getItem("user"))?.name || "Citizen"}</span></p>
-      </div>
+      <PageHeader
+        title="Public Grievance Management System"
+        subtitle={`Welcome back, ${userName}`}
+      />
 
       {/* Your Summary Section */}
       <div className="mb-8">
