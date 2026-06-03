@@ -1,6 +1,7 @@
 import Complaint from "../models/Complaint.js";
 import User from "../models/User.js";
 import Department from "../models/Department.js";
+import ActivityLog from "../models/ActivityLog.js";
 
 export const getAllComplaintsAdmin = async (req, res) => {
   try {
@@ -37,6 +38,13 @@ export const updateComplaintStatus = async (req, res) => {
 
     await complaint.save();
 
+    await ActivityLog.create({
+      action: `Updated complaint status to ${status}`,
+      performedBy: req.user._id,
+      complaint: complaint._id,
+      metadata: { status },
+    });
+
     res.status(200).json({
       success: true,
       message: "Complaint status updated",
@@ -69,6 +77,13 @@ export const addRemark = async (req, res) => {
     });
 
     await complaint.save();
+
+    await ActivityLog.create({
+      action: `Added remark to complaint ${complaint._id}`,
+      performedBy: req.user._id,
+      complaint: complaint._id,
+      metadata: { text },
+    });
 
     res.status(200).json({
       success: true,
@@ -112,6 +127,12 @@ export const deleteUser = async (req, res) => {
       });
     }
 
+    await ActivityLog.create({
+      action: `Deleted user ${user.email}`,
+      performedBy: req.user._id,
+      metadata: { userId: user._id, email: user.email },
+    });
+
     res.status(200).json({
       success: true,
       message: "User deleted successfully",
@@ -147,6 +168,12 @@ export const updateUserRole = async (req, res) => {
         message: "User not found",
       });
     }
+
+    await ActivityLog.create({
+      action: `Updated role for user ${user.email} to ${role}`,
+      performedBy: req.user._id,
+      metadata: { userId: user._id, role },
+    });
 
     res.status(200).json({
       success: true,
@@ -198,6 +225,12 @@ export const createDepartment = async (req, res) => {
       head,
     });
 
+    await ActivityLog.create({
+      action: `Created department ${department.name}`,
+      performedBy: req.user._id,
+      metadata: { departmentId: department._id, name: department.name },
+    });
+
     res.status(201).json({
       success: true,
       message: "Department created successfully",
@@ -226,6 +259,12 @@ export const updateDepartment = async (req, res) => {
       });
     }
 
+    await ActivityLog.create({
+      action: `Updated department ${department._id}`,
+      performedBy: req.user._id,
+      metadata: { departmentId: department._id },
+    });
+
     res.status(200).json({
       success: true,
       message: "Department updated successfully",
@@ -249,6 +288,12 @@ export const deleteDepartment = async (req, res) => {
         message: "Department not found",
       });
     }
+
+    await ActivityLog.create({
+      action: `Deleted department ${department.name}`,
+      performedBy: req.user._id,
+      metadata: { departmentId: department._id, name: department.name },
+    });
 
     res.status(200).json({
       success: true,
@@ -359,6 +404,13 @@ export const assignDepartment = async (req, res) => {
         message: "Complaint not found",
       });
     }
+
+    await ActivityLog.create({
+      action: `Assigned department ${department} to complaint ${complaint._id}`,
+      performedBy: req.user._id,
+      complaint: complaint._id,
+      metadata: { department },
+    });
 
     res.status(200).json({
       success: true,

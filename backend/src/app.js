@@ -8,6 +8,7 @@ import complaintRoutes from "./routes/complaintRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
+import activityRoutes from "./routes/activityRoutes.js";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/complaints", complaintRoutes);
 
 app.use("/api/v1/notifications", notificationRoutes);
+app.use("/api/v1/activity-logs", activityRoutes);
 
 app.use("/api/v1/admin", adminRoutes);
 
