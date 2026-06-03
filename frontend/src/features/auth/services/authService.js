@@ -36,3 +36,13 @@ export const checkEmailExists = async (email) => {
     return false;
   }
 };
+
+export const forgotPassword = async (email) => {
+  const response = await axiosInstance.post("/auth/forgot-password", { email });
+  return response.data;
+};
+
+export const resetPassword = async (payload) => {
+  const response = await axiosInstance.post("/auth/reset-password", payload);
+  return response.data;
+};

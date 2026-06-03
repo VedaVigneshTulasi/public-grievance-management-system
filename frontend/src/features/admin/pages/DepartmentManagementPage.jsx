@@ -16,7 +16,7 @@ const DepartmentManagementPage = () => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingDept, setEditingDept] = useState(null);
-  const [formData, setFormData] = useState({ name: "", description: "" });
+  const [formData, setFormData] = useState({ name: "", description: "", email: "", phone: "", head: "" });
 
   useEffect(() => {
     loadDepartments();
@@ -36,10 +36,16 @@ const DepartmentManagementPage = () => {
   const handleOpenModal = (dept = null) => {
     if (dept) {
       setEditingDept(dept);
-      setFormData({ name: dept.name, description: dept.description || "" });
+      setFormData({
+        name: dept.name,
+        description: dept.description || "",
+        email: dept.email || "",
+        phone: dept.phone || "",
+        head: dept.head || "",
+      });
     } else {
       setEditingDept(null);
-      setFormData({ name: "", description: "" });
+      setFormData({ name: "", description: "", email: "", phone: "", head: "" });
     }
     setShowModal(true);
   };
@@ -47,6 +53,14 @@ const DepartmentManagementPage = () => {
   const handleSaveDepartment = async () => {
     if (!formData.name.trim()) {
       toast.error("Department name is required");
+      return;
+    }
+    if (!formData.email.trim()) {
+      toast.error("Department email is required");
+      return;
+    }
+    if (!formData.phone.trim()) {
+      toast.error("Department phone is required");
       return;
     }
 
@@ -227,6 +241,38 @@ const DepartmentManagementPage = () => {
                   }
                   placeholder="Enter department description..."
                   rows="4"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="department@example.gov"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+                <input
+                  type="text"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  placeholder="1800-000-000"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Department Head</label>
+                <input
+                  type="text"
+                  value={formData.head}
+                  onChange={(e) => setFormData({ ...formData, head: e.target.value })}
+                  placeholder="Head Name"
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>

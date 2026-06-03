@@ -128,6 +128,9 @@ try {
   icon={<Lock size={20} />}
   error={errors.password}
 />
+      <div className="text-right">
+        <Link to="/forgot-password" className="text-sm text-blue-600 hover:underline">Forgot password?</Link>
+      </div>
 {/* 
       {errors.password && (
         <p className="text-red-500 text-sm">{errors.password}</p>

@@ -8,7 +8,6 @@ import PageHeader from "../../../components/common/PageHeader";
 import { createComplaint } from "../services/complaintService";
 
 const CreateComplaintPage = () => {
-  const [attachment, setAttachment] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -26,13 +25,9 @@ const CreateComplaintPage = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const formPayload = new FormData();
-      Object.keys(formData).forEach((key) => formPayload.append(key, formData[key]));
-      if (attachment) formPayload.append("attachment", attachment);
-      const response = await createComplaint(formPayload);
+      const response = await createComplaint(formData);
       toast.success(response.message);
       setFormData({ title: "", description: "", department: "", priority: "Medium", location: "" });
-      setAttachment(null);
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to create complaint");
     } finally {
@@ -91,14 +86,6 @@ const CreateComplaintPage = () => {
               </div>
             </div>
             <Input label="Location" name="location" value={formData.location} onChange={handleChange} placeholder="Enter complaint location" />
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-3">Attachment</label>
-              <input
-                type="file"
-                onChange={(e) => setAttachment(e.target.files[0])}
-                className="w-full rounded-2xl border border-slate-300 bg-white p-3 text-sm text-slate-700 shadow-sm focus:border-[#0B2E59] focus:outline-none focus:ring-2 focus:ring-[#0B2E59]/20"
-              />
-            </div>
             <Button type="submit">{loading ? "Submitting..." : "Submit Complaint"}</Button>
           </form>
         </Card>
@@ -118,7 +105,7 @@ const CreateComplaintPage = () => {
             </div>
             <div className="rounded-2xl bg-white p-4 shadow-sm">
               <p className="font-semibold">Step 3</p>
-              <p className="mt-2">Attach a supporting document if available.</p>
+              <p className="mt-2">Submit the complaint once the details are complete.</p>
             </div>
           </div>
         </Card>

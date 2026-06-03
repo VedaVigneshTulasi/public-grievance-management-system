@@ -42,9 +42,9 @@ const AnalyticsChart = ({
 
   if (type === "pie") {
     return (
-      <div className="h-72">
+      <div className="h-72 w-full" style={{ minHeight: "300px", minWidth: "100%" }}>
 
-        <ResponsiveContainer>
+        <ResponsiveContainer width="100%" height="100%">
 
           <PieChart>
 
@@ -89,9 +89,9 @@ const AnalyticsChart = ({
   ========================== */
 
   return (
-    <div className="h-72">
+    <div className="h-72 w-full" style={{ minHeight: "300px", minWidth: "100%" }}>
 
-      <ResponsiveContainer>
+      <ResponsiveContainer width="100%" height="100%">
 
         <BarChart
           data={data}
@@ -109,7 +109,7 @@ const AnalyticsChart = ({
           <Legend />
 
           <Bar
-            dataKey="total"
+            dataKey="count"
             fill="#0B2E59"
             barSize={24}
             radius={[8, 8, 0, 0]}

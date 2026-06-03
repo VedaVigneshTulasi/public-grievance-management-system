@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import complaintRoutes from "./routes/complaintRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 
 const app = express();
 
@@ -30,6 +31,8 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 
 app.use("/api/v1/complaints", complaintRoutes);
+
+app.use("/api/v1/notifications", notificationRoutes);
 
 app.use("/api/v1/admin", adminRoutes);
 

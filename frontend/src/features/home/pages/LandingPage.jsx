@@ -28,22 +28,6 @@ const LandingPage = () => {
 
   return (
     <div className="bg-slate-50">
-      <section className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-1">
-            < p className="text-xs uppercase tracking-[0.24em] text-slate-500">Government of India</p>
-            <h2 className="text-2xl font-semibold text-[#0B2E59]">Citizen Services Portal</h2>
-          </div>
-          <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
-            <span>Monday, 31 May 2026</span>
-            <span className="hidden sm:inline">|</span>
-            <span>Help Desk: 1800-123-4567</span>
-            <span className="hidden md:inline">|</span>
-            <a href="mailto:support@pgms.gov.in" className="underline text-[#123D82]">support@pgms.gov.in</a>
-          </div>
-        </div>
-      </section>
-
       <section className="bg-[#0B2E59] text-white">
         <div className="max-w-7xl mx-auto px-6 py-20 grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
           <div className="space-y-8">

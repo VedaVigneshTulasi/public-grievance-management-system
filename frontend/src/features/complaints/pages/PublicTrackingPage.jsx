@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "../../../components/ui/Card";
 import PageHeader from "../../../components/common/PageHeader";
 import StatusBadge from "../../../components/common/StatusBadge";
 import { trackComplaint } from "../services/complaintService";
 
 const PublicTrackingPage = () => {
+  const navigate = useNavigate();
 
   const [trackingId,
     setTrackingId] =
@@ -63,6 +65,12 @@ const PublicTrackingPage = () => {
             className="rounded-3xl bg-[#0B2E59] px-6 py-4 text-sm font-semibold text-white shadow hover:bg-[#123D82] transition"
           >
             Track Complaint
+          </button>
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="rounded-3xl bg-[#138808] px-6 py-4 text-sm font-semibold text-white shadow hover:bg-[#0D6B06] transition"
+          >
+            Dashboard
           </button>
         </div>
       </Card>
